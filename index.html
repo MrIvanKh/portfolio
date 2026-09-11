@@ -1,4 +1,19 @@
-<title>Program Ops Console</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ivan Khrapach — Program Ops Console</title>
+<meta name="description" content="Ivan Khrapach — Technical Program Manager. Case studies and side projects, with a link to a playable career map.">
+<link rel="canonical" href="https://mrivankh.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ivan Khrapach — Program Ops Console">
+<meta property="og:description" content="Technical Program Manager. Case studies and side projects, with a link to a playable career map.">
+<meta property="og:url" content="https://mrivankh.github.io/portfolio/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ivan Khrapach — Program Ops Console">
+<meta name="twitter:description" content="Technical Program Manager. Case studies and side projects, with a link to a playable career map.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzE2MjIyQyIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFFN0E3MiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIzLjUiIGZpbGw9IiMxRTdBNzIiLz48L3N2Zz4=">
 <style>
   :root {
     --paper: #F2F5F7;
@@ -87,9 +102,10 @@
   .topnav .brand {
     font-family: var(--mono);
     font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
-    color: var(--ink);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
     text-decoration: none;
     white-space: nowrap;
   }
@@ -117,7 +133,7 @@
 
   .topnav a.nav-link.play { color: var(--amber); }
 
-  /* ---------- header / status bar ---------- */
+  /* ---------- header / hero ---------- */
 
   header.intro { margin-bottom: 1rem; }
 
@@ -125,7 +141,7 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.4rem;
   }
 
   .dot {
@@ -140,7 +156,7 @@
   h1 {
     font-family: var(--mono);
     font-weight: 600;
-    font-size: clamp(1.7rem, 4.4vw, 2.35rem);
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
     letter-spacing: -0.01em;
     margin: 0 0 0.5rem;
     text-wrap: balance;
@@ -149,13 +165,27 @@
   .role-target {
     font-size: 1.05rem;
     color: var(--ink-soft);
-    margin: 0 0 1.8rem;
+    margin: 0 0 1.1rem;
     max-width: 60ch;
   }
 
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .contact-row a { color: var(--teal); text-decoration: none; }
+  .contact-row a:hover { text-decoration: underline; }
+  .contact-row .sep { color: var(--line-strong); }
+
   .signals {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -173,7 +203,7 @@
     color: var(--teal);
   }
 
-  .signal .cap { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.15rem; }
+  .signal .cap { font-size: 0.76rem; color: var(--ink-soft); margin-top: 0.15rem; }
 
   /* ---------- section headings ---------- */
 
@@ -223,6 +253,7 @@
 
   .entry-title { font-weight: 600; font-size: 1.05rem; margin: 0; text-wrap: balance; }
   .entry-meta { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  .result-teaser { font-size: 0.9rem; color: var(--teal); margin: 0.55rem 0 0; font-weight: 500; }
 
   .chev {
     font-family: var(--mono);
@@ -254,7 +285,7 @@
 
   .xyz dd { margin: 0; }
 
-  .stat-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .stat-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
 
   .stat-chip {
     font-family: var(--mono);
@@ -278,42 +309,6 @@
     text-decoration: none;
   }
   .entry-link:hover { text-decoration: underline; }
-
-  /* ---------- resume section ---------- */
-
-  .resume-summary { font-size: 0.98rem; max-width: 64ch; margin: 0 0 1.8rem; }
-
-  .timeline { border-left: 2px solid var(--line); padding-left: 1.2rem; display: flex; flex-direction: column; gap: 1.3rem; }
-
-  .tl-item { position: relative; }
-  .tl-item::before {
-    content: "";
-    position: absolute;
-    left: -1.53rem;
-    top: 0.3rem;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--teal);
-    border: 2px solid var(--paper);
-    box-shadow: 0 0 0 1px var(--line);
-  }
-
-  .tl-title { font-weight: 600; font-size: 0.98rem; }
-  .tl-org { font-size: 0.85rem; color: var(--ink-soft); font-family: var(--mono); margin-top: 0.15rem; }
-  .tl-note { font-size: 0.88rem; margin-top: 0.35rem; max-width: 58ch; }
-
-  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.8rem; }
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.76rem;
-    color: var(--ink-soft);
-    border: 1px solid var(--line-strong);
-    border-radius: 6px;
-    padding: 0.3rem 0.6rem;
-  }
-
-  .cred-row { margin-top: 1.6rem; font-size: 0.85rem; color: var(--ink-soft); }
-  .cred-row strong { color: var(--ink); font-weight: 600; }
 
   /* ---------- companion / game callout ---------- */
 
@@ -345,7 +340,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.4rem 1rem;
     font-size: 0.88rem;
     color: var(--ink-soft);
   }
@@ -353,33 +348,44 @@
   footer a { color: var(--teal); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
+  .foot-main { display: flex; flex-direction: column; gap: 0.3rem; }
+  .updated { font-family: var(--mono); font-size: 0.76rem; color: var(--ink-soft); opacity: 0.8; }
   .foot-links { display: flex; gap: 1.1rem; flex-wrap: wrap; }
 </style>
+</head>
+<body>
 
-<div class="topnav">
-  <a class="brand" href="#top">IVAN KHRAPACH ///</a>
-  <nav>
+<nav class="topnav" aria-label="Primary">
+  <a class="brand" href="#top">Program Ops Console</a>
+  <nav aria-label="Sections">
     <a class="nav-link" href="#cases">Case Studies</a>
     <a class="nav-link" href="#projects">Projects</a>
-    <a class="nav-link play" href="program-quest.html" target="_self">Play ↗</a>
+    <a class="nav-link play" href="program-quest.html" target="_blank" rel="noopener">Play ↗</a>
   </nav>
-</div>
+</nav>
 
-<div class="wrap" id="top">
+<main class="wrap" id="top">
 
   <header class="intro">
     <div class="status-bar">
       <span class="dot" aria-hidden="true"></span>
       <span class="label">Available — targeting Warsaw, PL</span>
     </div>
-    <h1>Program Ops Console</h1>
-    <p class="role-target">Ivan Khrapach — Technical Program Manager / Program &amp; Strategy Leader, based in Toronto and relocating to Warsaw, Poland. Case studies and side projects below, read the way an on-call TPM would write them up.</p>
+    <h1>Ivan Khrapach</h1>
+    <p class="role-target">Technical Program Manager / Program &amp; Strategy Leader, based in Toronto and relocating to Warsaw, Poland.</p>
+    <div class="contact-row">
+      <a href="mailto:ivan.khrapach1@gmail.com">ivan.khrapach1@gmail.com</a>
+      <span class="sep">·</span>
+      <a href="https://linkedin.com/in/mr-ivan" target="_blank" rel="noopener">linkedin.com/in/mr-ivan</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/MrIvanKh" target="_blank" rel="noopener">github.com/MrIvanKh</a>
+    </div>
 
     <div class="signals">
       <div class="signal"><div class="num">7+</div><div class="cap">years, cross-org delivery</div></div>
-      <div class="signal"><div class="num">$9M+</div><div class="cap">budget governed</div></div>
-      <div class="signal"><div class="num">7</div><div class="cap">global regions aligned</div></div>
-      <div class="signal"><div class="num">200+</div><div class="cap">stakeholders, live portfolio</div></div>
+      <div class="signal"><div class="num">70%</div><div class="cap">2-yr roadmap in 10mo · CBRE</div></div>
+      <div class="signal"><div class="num">100+</div><div class="cap">initiatives/yr · Cadillac Fairview</div></div>
+      <div class="signal"><div class="num">7</div><div class="cap">regions, dual-vendor model · Deloitte/GCM</div></div>
     </div>
   </header>
 
@@ -388,14 +394,20 @@
       <span class="label">01 · Case Log</span>
       <span class="rule" aria-hidden="true"></span>
     </div>
-    <p class="intro">Three real programs, each run through under genuine ambiguity — no pre-defined process, competing stakeholders, and a deadline. Expand any entry for the full write-up.</p>
+    <p class="intro">Three real programs, each run through under genuine ambiguity — no pre-defined process, competing stakeholders, and a deadline. Results are visible below; expand any entry for the full write-up.</p>
 
-    <details class="card-entry" open>
+    <details class="card-entry">
       <summary class="card-head">
         <div>
           <div class="entry-id">CASE-01 · COST-CENTER-362</div>
           <p class="entry-title">A $9M+ cost center with no clean baseline</p>
           <p class="entry-meta">Deloitte Canada, embedded — Google Cloud Marketing S&amp;O · Mar 2026–present</p>
+          <p class="result-teaser">→ $800K+ misclassified spend found, landed at net-zero</p>
+          <div class="stat-row">
+            <span class="stat-chip">$800K+ found</span>
+            <span class="stat-chip">net-zero close</span>
+            <span class="stat-chip">2% variance SLA</span>
+          </div>
         </div>
         <span class="chev" aria-hidden="true">›</span>
       </summary>
@@ -408,11 +420,6 @@
           <dt>RESULT</dt>
           <dd>Found $800K+ in misclassified spend, reallocated $300K of Q3 underspend against a projected Q4 deficit, and landed the center at net-zero with an ongoing 2% variance-tracking process still running today.</dd>
         </dl>
-        <div class="stat-row">
-          <span class="stat-chip">$800K+ found</span>
-          <span class="stat-chip">net-zero close</span>
-          <span class="stat-chip">2% variance SLA</span>
-        </div>
       </div>
     </details>
 
@@ -422,6 +429,12 @@
           <div class="entry-id">CASE-02 · XWF-GOVERNANCE-7R</div>
           <p class="entry-title">One operating model across two vendors, seven regions</p>
           <p class="entry-meta">Deloitte Canada, embedded — Google Cloud Marketing S&amp;O · Mar 2026–present</p>
+          <p class="result-teaser">→ Unified action plan presented to leadership across every region</p>
+          <div class="stat-row">
+            <span class="stat-chip">7 regions audited</span>
+            <span class="stat-chip">2 vendor orgs aligned</span>
+            <span class="stat-chip">1 RASCI system of record</span>
+          </div>
         </div>
         <span class="chev" aria-hidden="true">›</span>
       </summary>
@@ -434,11 +447,6 @@
           <dt>RESULT</dt>
           <dd>Co-authored and presented a unified action plan and executive recommendation deck that reset supplier collaboration and resource allocation across every region.</dd>
         </dl>
-        <div class="stat-row">
-          <span class="stat-chip">7 regions audited</span>
-          <span class="stat-chip">2 vendor orgs aligned</span>
-          <span class="stat-chip">1 RASCI system of record</span>
-        </div>
       </div>
     </details>
 
@@ -448,6 +456,12 @@
           <div class="entry-id">CASE-03 · FTO-ROADMAP-COMPRESS</div>
           <p class="entry-title">An 18-month roadmap that had to move faster</p>
           <p class="entry-meta">Cadillac Fairview, Finance Transformation Office · Jan 2024–Nov 2025</p>
+          <p class="result-teaser">→ 18mo → 10mo, close time down ~30%</p>
+          <div class="stat-row">
+            <span class="stat-chip">18mo → 10mo</span>
+            <span class="stat-chip">~30% faster close</span>
+            <span class="stat-chip">200+ users onboarded</span>
+          </div>
         </div>
         <span class="chev" aria-hidden="true">›</span>
       </summary>
@@ -460,11 +474,6 @@
           <dt>RESULT</dt>
           <dd>Compressed the roadmap to ~10 months and cut financial close/reporting time by roughly 30%, with the governance cadence still running the portfolio today.</dd>
         </dl>
-        <div class="stat-row">
-          <span class="stat-chip">18mo → 10mo</span>
-          <span class="stat-chip">~30% faster close</span>
-          <span class="stat-chip">200+ users onboarded</span>
-        </div>
       </div>
     </details>
   </section>
@@ -476,12 +485,18 @@
     </div>
     <p class="intro">Two self-directed builds — evidence of hands-on technical ownership outside a formal engineering title.</p>
 
-    <details class="card-entry" open>
+    <details class="card-entry">
       <summary class="card-head">
         <div>
           <div class="entry-id">PROJECT-01 · RECOVERFLOW</div>
           <p class="entry-title">Stripe payment-recovery SaaS — solo build</p>
           <p class="entry-meta">React, TypeScript, Supabase/Postgres, Stripe OAuth</p>
+          <p class="result-teaser">→ 5 core workflows shipped solo, RLS + RBAC + HMAC-signed OAuth</p>
+          <div class="stat-row">
+            <span class="stat-chip">0→1, solo</span>
+            <span class="stat-chip">5 core workflows shipped</span>
+            <span class="stat-chip">RLS + RBAC + HMAC OAuth</span>
+          </div>
         </div>
         <span class="chev" aria-hidden="true">›</span>
       </summary>
@@ -494,15 +509,10 @@
           <dt>HARDENING</dt>
           <dd>Shipped a full security pass: role-based access control, Postgres row-level security, HMAC-signed OAuth state tokens, and a locked-down CORS policy.</dd>
         </dl>
-        <div class="stat-row">
-          <span class="stat-chip">0→1, solo</span>
-          <span class="stat-chip">5 core workflows shipped</span>
-          <span class="stat-chip">RLS + RBAC + HMAC OAuth</span>
-        </div>
         <div class="link-row">
           <a class="entry-link" href="https://www.recover-flow.com/" target="_blank" rel="noopener">↗ recover-flow.com</a>
           <a class="entry-link" href="https://github.com/MrIvanKh" target="_blank" rel="noopener">↗ github.com/MrIvanKh</a>
-          <a class="entry-link" href="http://linkedin.com/in/mr-ivan" target="_blank" rel="noopener">↗ linkedin.com/in/mr-ivan</a>
+          <a class="entry-link" href="https://linkedin.com/in/mr-ivan" target="_blank" rel="noopener">↗ linkedin.com/in/mr-ivan</a>
         </div>
       </div>
     </details>
@@ -513,6 +523,11 @@
           <div class="entry-id">PROJECT-02 · RAISLYHQ</div>
           <p class="entry-title">Automated job-search SaaS platform</p>
           <p class="entry-meta">Founder — product direction, with developer &amp; UX collaborators</p>
+          <p class="result-teaser">→ Concept to MVP, founder-led</p>
+          <div class="stat-row">
+            <span class="stat-chip">Concept → MVP</span>
+            <span class="stat-chip">Founder-led</span>
+          </div>
         </div>
         <span class="chev" aria-hidden="true">›</span>
       </summary>
@@ -525,10 +540,6 @@
           <dt>OUTCOME</dt>
           <dd>Shipped and iterated on monetization and acquisition through the MVP stage — direct 0→1 product ownership outside a formal PM title.</dd>
         </dl>
-        <div class="stat-row">
-          <span class="stat-chip">Concept → MVP</span>
-          <span class="stat-chip">Founder-led</span>
-        </div>
       </div>
     </details>
   </section>
@@ -547,12 +558,18 @@
   </section>
 
   <footer>
-    <div>Ivan Khrapach · Toronto, Canada, relocating to Warsaw, PL · authorized to work in Poland</div>
+    <div class="foot-main">
+      <div>Ivan Khrapach · Toronto, Canada, relocating to Warsaw, PL · authorized to work in Poland</div>
+      <div class="updated">Last updated: September 2026</div>
+    </div>
     <div class="foot-links">
       <a href="mailto:ivan.khrapach1@gmail.com">ivan.khrapach1@gmail.com</a>
-      <a href="http://linkedin.com/in/mr-ivan">linkedin.com/in/mr-ivan</a>
+      <a href="https://linkedin.com/in/mr-ivan">linkedin.com/in/mr-ivan</a>
       <a href="https://github.com/MrIvanKh">github.com/MrIvanKh</a>
     </div>
   </footer>
 
-</div>
+</main>
+
+</body>
+</html>
