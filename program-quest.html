@@ -1,0 +1,614 @@
+<title>Program Quest</title>
+<style>
+  :root {
+    --sky: #7EC8E3;
+    --sky-deep: #3C7EA8;
+    --ground: #8B5A2B;
+    --ground-dark: #6B4420;
+    --grass: #5FAE5F;
+    --ink: #1B1B2A;
+    --paper: #FFF4D6;
+    --paper-edge: #E8D6A3;
+    --coin: #FFC93C;
+    --coin-dark: #C9950F;
+    --red: #E4572E;
+    --red-dark: #B33F1E;
+    --locked: #8A8A9A;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+
+  html, body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    overflow-x: hidden;
+  }
+
+  .frame {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1.4rem 1rem 2.2rem;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .title-row h1 {
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .title-row .byline {
+    font-size: 0.72rem;
+    color: var(--paper-edge);
+    letter-spacing: 0.04em;
+  }
+
+  .screen-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 4px solid var(--paper);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 0 4px var(--ink), 0 10px 30px rgba(0,0,0,0.5);
+    background: var(--ink);
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+
+  /* ---------- controls ---------- */
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hint {
+    font-size: 0.72rem;
+    color: var(--paper-edge);
+    letter-spacing: 0.02em;
+  }
+
+  .pad {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pad button {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    width: 46px;
+    height: 40px;
+    background: var(--paper);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 4px;
+    box-shadow: 0 3px 0 var(--ink-dark, #000);
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+  }
+  .pad button:active { transform: translateY(2px); box-shadow: none; }
+
+  .map-btn {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    background: var(--red);
+    color: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 4px;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .map-btn:hover { background: var(--red-dark); }
+
+  footer {
+    margin-top: 1.6rem;
+    font-size: 0.72rem;
+    color: var(--paper-edge);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  footer a { color: var(--coin); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+
+<div class="frame">
+  <div class="title-row">
+    <h1>★ Program Quest</h1>
+    <span class="byline">Ivan Khrapach — TPM candidate, Google Technical Infrastructure, Warsaw</span>
+  </div>
+
+  <div class="screen-wrap">
+    <canvas id="game" width="480" height="270"></canvas>
+  </div>
+
+  <div class="controls">
+    <span class="hint" id="hint">Arrow keys / A·D to walk · Enter to select</span>
+    <div style="display:flex; gap:0.6rem; align-items:center;">
+      <button class="map-btn" id="map-btn">Map</button>
+      <div class="pad">
+        <button id="btn-left" aria-label="Move left">◀</button>
+        <button id="btn-right" aria-label="Move right">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>No fail states, no timer — just walk through it.</span>
+    <a href="#" id="portfolio-link">→ full case log</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var canvas = document.getElementById("game");
+  var ctx = canvas.getContext("2d");
+  var W = canvas.width, H = canvas.height;
+  var GROUND_Y = H - 54;
+
+  var PALETTE = {
+    sky: "#7EC8E3", skyDeep: "#3C7EA8", ground: "#8B5A2B", groundDark: "#6B4420",
+    grass: "#5FAE5F", ink: "#1B1B2A", paper: "#FFF4D6", paperEdge: "#E8D6A3",
+    coin: "#FFC93C", coinDark: "#C9950F", red: "#E4572E", redDark: "#B33F1E",
+    locked: "#8A8A9A", skin: "#E8B48C", suit: "#2E4374", suitDark: "#1F2E52",
+    white: "#FFFFFF"
+  };
+
+  document.getElementById("portfolio-link").href = "index.html";
+
+  // ---------------- content ----------------
+
+  var WORLDS = [
+    {
+      id: 0, name: "WORLD 1", place: "Warsaw, PL", org: "CBRE", years: "2018 – 2022", accent: "#5FAE5F",
+      milestones: [
+        { x: 260, label: "Finance & Business Analyst", text: "Delivered P&L analysis, forecasting, and executive commentary across 18 business units — including financial support for enterprise clients such as Google." },
+        { x: 620, label: "70% in 10 Months", text: "Delivered 70% of a two-year finance-transformation roadmap in 10 months, coordinating 15+ cross-functional teams with Agile/Scrum." },
+        { x: 1000, label: "Reporting Overhaul", text: "Centralized project documentation into SharePoint and Jira, eliminating duplicate reporting across the transformation portfolio." }
+      ],
+      levelWidth: 1500
+    },
+    {
+      id: 1, name: "WORLD 2", place: "Toronto, CA", org: "Cadillac Fairview", years: "2023 – 2025", accent: "#3C7EA8",
+      milestones: [
+        { x: 260, label: "100+ Initiatives / Year", text: "Directed a portfolio of 100+ cross-functional initiatives annually across 200+ Finance and Technology stakeholders." },
+        { x: 620, label: "18mo → 10mo", text: "Compressed an 18-month transformation roadmap into 10 months by introducing Agile/iterative delivery in place of waterfall." },
+        { x: 1000, label: "Asana at Scale", text: "Scaled Asana into the department's operating system for 200+ users — intake, governance, and reporting workflows built from scratch." }
+      ],
+      levelWidth: 1500
+    },
+    {
+      id: 2, name: "WORLD 3", place: "Toronto, CA", org: "Yuno", years: "Nov 2025 – Mar 2026", accent: "#E4572E",
+      milestones: [
+        { x: 260, label: "OKR Framework, Day One", text: "Designed and launched a company-wide OKR and performance framework adopted across a 200+ person organization." },
+        { x: 620, label: "Product + Eng Redesign", text: "Partnered directly with the Head of Product and Head of Engineering to redesign team topology and ways of working." },
+        { x: 1000, label: "90-Day Plan", text: "Converted competing leadership priorities into a structured 90-day execution plan through senior-leadership decision forums." }
+      ],
+      levelWidth: 1500
+    },
+    {
+      id: 3, name: "WORLD 4", place: "Embedded @ Google Cloud Marketing", org: "Deloitte Canada", years: "Mar 2026 – Present", accent: "#FFC93C",
+      milestones: [
+        { x: 260, label: "$9M+ Cost Center", text: "Recovered financial control over a $9M+ cost center — found $800K+ in misclassified spend and reached a projected net-zero balance." },
+        { x: 620, label: "7 Regions, 2 Vendors", text: "Unified governance across a 7-region, dual-vendor (Deloitte/Accenture) extended-workforce model with RASCI-based ownership." },
+        { x: 1000, label: "1,000+ Hours Saved", text: "Scaled AI-driven reporting automation to 100% automated weekly reporting — a projected 1,000+ hours saved annually." }
+      ],
+      levelWidth: 1500
+    }
+  ];
+
+  // ---------------- state ----------------
+
+  var SCREEN = "title"; // title | map | level | complete
+  var progress = [false, false, false, false]; // world complete flags
+  var mapCursor = 0;
+
+  var level = null; // active level runtime state
+  var keys = {};
+
+  // ---------------- input ----------------
+
+  window.addEventListener("keydown", function (e) {
+    keys[e.key] = true;
+    if (SCREEN === "title" && (e.key === "Enter" || e.key === " ")) { SCREEN = "map"; }
+    else if (SCREEN === "map") {
+      if (e.key === "ArrowLeft" || e.key === "a") mapCursor = Math.max(0, mapCursor - 1);
+      if (e.key === "ArrowRight" || e.key === "d") mapCursor = Math.min(WORLDS.length - 1, mapCursor + 1);
+      if (e.key === "Enter" || e.key === " ") enterWorld(mapCursor);
+    } else if (SCREEN === "level" && level && level.popup) {
+      if (e.key === "Enter" || e.key === " " || e.key === "Escape") closePopup();
+    } else if (SCREEN === "complete" && (e.key === "Enter" || e.key === " ")) {
+      SCREEN = "map";
+    }
+  });
+  window.addEventListener("keyup", function (e) { keys[e.key] = false; });
+
+  function bindHold(id, key) {
+    var el = document.getElementById(id);
+    var set = function (v) { return function (ev) { ev.preventDefault(); keys[key] = v; }; };
+    el.addEventListener("pointerdown", set(true));
+    el.addEventListener("pointerup", set(false));
+    el.addEventListener("pointerleave", set(false));
+  }
+  bindHold("btn-left", "ArrowLeft");
+  bindHold("btn-right", "ArrowRight");
+
+  document.getElementById("map-btn").addEventListener("click", function () {
+    if (SCREEN === "level" || SCREEN === "complete") SCREEN = "map";
+    else if (SCREEN === "title") SCREEN = "map";
+  });
+
+  canvas.addEventListener("click", function (ev) {
+    if (SCREEN === "title") { SCREEN = "map"; return; }
+    if (SCREEN === "level" && level && level.popup) { closePopup(); return; }
+    if (SCREEN === "map") {
+      var rect = canvas.getBoundingClientRect();
+      var mx = (ev.clientX - rect.left) / rect.width * W;
+      var nodeXs = mapNodeX();
+      var best = 0, bestD = Infinity;
+      nodeXs.forEach(function (x, i) { var d = Math.abs(x - mx); if (d < bestD) { bestD = d; best = i; } });
+      mapCursor = best;
+      enterWorld(best);
+    }
+  });
+
+  function mapNodeX() {
+    var margin = 70, span = W - margin * 2;
+    return WORLDS.map(function (_, i) { return margin + span * (i / (WORLDS.length - 1)); });
+  }
+
+  function isUnlocked(i) { return i === 0 || progress[i - 1]; }
+
+  function enterWorld(i) {
+    if (!isUnlocked(i)) return;
+    var w = WORLDS[i];
+    level = {
+      worldIndex: i,
+      world: w,
+      playerX: 40,
+      facing: 1,
+      walkFrame: 0,
+      walkTimer: 0,
+      collected: w.milestones.map(function () { return false; }),
+      popup: null
+    };
+    SCREEN = "level";
+  }
+
+  function closePopup() { if (level) level.popup = null; }
+
+  // ---------------- update ----------------
+
+  var SPEED = 2.2;
+
+  function update() {
+    if (SCREEN !== "level" || !level) return;
+    if (level.popup) return;
+
+    var moving = false;
+    if (keys["ArrowLeft"] || keys["a"]) { level.playerX -= SPEED; level.facing = -1; moving = true; }
+    if (keys["ArrowRight"] || keys["d"]) { level.playerX += SPEED; level.facing = 1; moving = true; }
+    level.playerX = Math.max(10, Math.min(level.world.levelWidth - 10, level.playerX));
+
+    if (moving) {
+      level.walkTimer++;
+      if (level.walkTimer > 8) { level.walkFrame = 1 - level.walkFrame; level.walkTimer = 0; }
+    } else {
+      level.walkFrame = 0;
+    }
+
+    // milestone collection
+    level.world.milestones.forEach(function (m, i) {
+      if (!level.collected[i] && Math.abs(level.playerX - m.x) < 20) {
+        level.collected[i] = true;
+        level.popup = m;
+      }
+    });
+
+    // goal
+    var allCollected = level.collected.every(Boolean);
+    var goalX = level.world.levelWidth - 40;
+    if (allCollected && level.playerX > goalX - 14) {
+      progress[level.worldIndex] = true;
+      if (level.worldIndex === WORLDS.length - 1) {
+        SCREEN = "complete";
+      } else {
+        SCREEN = "map";
+        mapCursor = Math.min(WORLDS.length - 1, level.worldIndex + 1);
+      }
+    }
+  }
+
+  // ---------------- drawing helpers ----------------
+
+  function rect(x, y, w, h, c) { ctx.fillStyle = c; ctx.fillRect(Math.round(x), Math.round(y), w, h); }
+
+  function pixelText(text, x, y, size, color, align) {
+    ctx.fillStyle = color;
+    ctx.font = "bold " + size + "px " + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = align || "left";
+    ctx.textBaseline = "top";
+    ctx.fillText(text, Math.round(x), Math.round(y));
+  }
+
+  function drawSky(accent) {
+    var grad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+    grad.addColorStop(0, PALETTE.skyDeep);
+    grad.addColorStop(1, PALETTE.sky);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, GROUND_Y);
+  }
+
+  function drawGround(offset) {
+    rect(0, GROUND_Y, W, 10, PALETTE.grass);
+    rect(0, GROUND_Y + 10, W, H - GROUND_Y - 10, PALETTE.ground);
+    ctx.strokeStyle = PALETTE.groundDark;
+    ctx.lineWidth = 2;
+    for (var x = -((offset || 0) % 24); x < W; x += 24) {
+      ctx.beginPath(); ctx.moveTo(x, GROUND_Y + 10); ctx.lineTo(x, H); ctx.stroke();
+    }
+  }
+
+  function drawCloud(x, y, s) {
+    rect(x, y, 18 * s, 7 * s, PALETTE.white);
+    rect(x + 5 * s, y - 4 * s, 12 * s, 7 * s, PALETTE.white);
+  }
+
+  function drawFlag(x, y, active, color) {
+    rect(x, y - 46, 3, 46, PALETTE.ink);
+    ctx.fillStyle = active ? color : PALETTE.locked;
+    ctx.beginPath();
+    ctx.moveTo(x + 3, y - 46); ctx.lineTo(x + 22, y - 39); ctx.lineTo(x + 3, y - 32);
+    ctx.fill();
+  }
+
+  function drawStar(x, y, collected, accent) {
+    ctx.save();
+    ctx.translate(x, y);
+    var col = collected ? PALETTE.locked : PALETTE.coin;
+    ctx.fillStyle = col;
+    ctx.strokeStyle = PALETTE.ink;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (var i = 0; i < 5; i++) {
+      var a1 = (-90 + i * 72) * Math.PI / 180;
+      var a2 = (-90 + i * 72 + 36) * Math.PI / 180;
+      var r1 = 9, r2 = 4;
+      ctx[i === 0 ? "moveTo" : "lineTo"](Math.cos(a1) * r1, Math.sin(a1) * r1);
+      ctx.lineTo(Math.cos(a2) * r2, Math.sin(a2) * r2);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    if (collected) {
+      ctx.strokeStyle = PALETTE.ink; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x - 5, y); ctx.lineTo(x - 1, y + 4); ctx.lineTo(x + 6, y - 5); ctx.stroke();
+    }
+  }
+
+  function drawPlayer(x, y, facing, frame) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(facing, 1);
+    // legs
+    rect(-6, 6, 5, frame === 0 ? 10 : 7, PALETTE.suitDark);
+    rect(1, 6, 5, frame === 0 ? 7 : 10, PALETTE.suitDark);
+    // torso
+    rect(-7, -14, 14, 20, PALETTE.suit);
+    // head
+    rect(-5, -24, 10, 10, PALETTE.skin);
+    rect(-6, -26, 12, 4, PALETTE.ink); // hair
+    // briefcase
+    rect(6, -4, 6, 7, PALETTE.coinDark);
+    ctx.restore();
+  }
+
+  function drawBuilding(x, kind, accent) {
+    if (kind === "warsaw") {
+      rect(x, GROUND_Y - 70, 26, 70, "#C9B896");
+      for (var r = 0; r < 5; r++) for (var c = 0; c < 3; c++) rect(x + 4 + c * 7, GROUND_Y - 62 + r * 12, 4, 6, "#7A6A4A");
+    } else if (kind === "tower") {
+      rect(x, GROUND_Y - 100, 22, 100, "#B8C4D0");
+      for (var r2 = 0; r2 < 8; r2++) rect(x + 3, GROUND_Y - 92 + r2 * 11, 16, 6, accent);
+    } else if (kind === "rocket") {
+      rect(x + 6, GROUND_Y - 60, 10, 40, PALETTE.paperEdge);
+      ctx.fillStyle = accent;
+      ctx.beginPath(); ctx.moveTo(x + 6, GROUND_Y - 60); ctx.lineTo(x + 11, GROUND_Y - 76); ctx.lineTo(x + 16, GROUND_Y - 60); ctx.fill();
+      rect(x, GROUND_Y - 24, 22, 8, "#8A8A9A");
+    } else if (kind === "cloud-server") {
+      drawCloud(x, GROUND_Y - 84, 1.6);
+      rect(x + 4, GROUND_Y - 54, 18, 38, "#3C4A5C");
+      for (var r3 = 0; r3 < 4; r3++) rect(x + 7, GROUND_Y - 49 + r3 * 8, 12, 3, accent);
+    }
+  }
+
+  // ---------------- render screens ----------------
+
+  function renderTitle() {
+    drawSky();
+    drawCloud(60, 40, 1.4); drawCloud(340, 60, 1.1); drawCloud(200, 30, 1.2);
+    drawGround(0);
+    drawPlayer(W / 2, GROUND_Y - 6, 1, Math.floor(Date.now() / 300) % 2);
+    pixelText("PROGRAM QUEST", W / 2, 46, 20, PALETTE.paper, "center");
+    pixelText("a career, four worlds, twelve real wins", W / 2, 72, 9, PALETTE.paperEdge, "center");
+    if (Math.floor(Date.now() / 500) % 2 === 0) {
+      pixelText("PRESS ENTER OR TAP TO START", W / 2, H - 30, 9, PALETTE.coin, "center");
+    }
+  }
+
+  function renderMap() {
+    drawSky();
+    drawCloud(40, 30, 1); drawCloud(420, 50, 1.2);
+    drawGround(0);
+    pixelText("SELECT A WORLD", W / 2, 18, 12, PALETTE.paper, "center");
+
+    var xs = mapNodeX();
+    var pathY = H / 2 + 10;
+    ctx.strokeStyle = PALETTE.paperEdge;
+    ctx.lineWidth = 3;
+    ctx.setLineDash([6, 6]);
+    ctx.beginPath();
+    ctx.moveTo(xs[0], pathY);
+    for (var i = 1; i < xs.length; i++) ctx.lineTo(xs[i], pathY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    WORLDS.forEach(function (w, i) {
+      var x = xs[i], y = pathY;
+      var unlocked = isUnlocked(i);
+      var done = progress[i];
+      var selected = mapCursor === i;
+      var r = selected ? 15 : 12;
+
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = done ? PALETTE.coin : (unlocked ? w.accent : PALETTE.locked);
+      ctx.fill();
+      ctx.lineWidth = selected ? 3 : 2;
+      ctx.strokeStyle = PALETTE.ink;
+      ctx.stroke();
+
+      if (done) pixelText("★", x, y - 6, 9, PALETTE.ink, "center");
+      else if (!unlocked) pixelText("×", x, y - 5, 10, PALETTE.ink, "center");
+
+      pixelText(w.name, x, y + 22, 9, selected ? PALETTE.paper : PALETTE.paperEdge, "center");
+      if (selected) {
+        pixelText(w.org + " · " + w.years, x, y + 34, 8, PALETTE.coin, "center");
+      }
+    });
+
+    pixelText("← → SELECT · ENTER TO PLAY", W / 2, H - 16, 8, PALETTE.paperEdge, "center");
+  }
+
+  function renderLevel() {
+    var w = level.world;
+    var camX = Math.max(0, Math.min(level.world.levelWidth - W, level.playerX - W / 2));
+
+    drawSky();
+    drawCloud((80 - camX * 0.3) % (W + 100) - 50, 30, 1);
+    drawCloud((320 - camX * 0.3) % (W + 200) - 80, 55, 1.3);
+
+    ctx.save();
+    ctx.translate(-camX, 0);
+    drawGround(camX);
+
+    // backdrop buildings, spaced along level
+    var buildingKind = ["warsaw", "tower", "rocket", "cloud-server"][w.id];
+    for (var bx = 60; bx < w.levelWidth; bx += 260) drawBuilding(bx, buildingKind, w.accent);
+
+    // milestones
+    w.milestones.forEach(function (m, i) { drawStar(m.x, GROUND_Y - 26, level.collected[i], w.accent); });
+
+    // goal flag
+    var allDone = level.collected.every(Boolean);
+    drawFlag(w.levelWidth - 34, GROUND_Y, allDone, w.accent);
+
+    // player
+    drawPlayer(level.playerX, GROUND_Y - 6, level.facing, level.walkFrame);
+
+    ctx.restore();
+
+    // HUD
+    rect(0, 0, W, 20, "rgba(27,27,42,0.55)");
+    pixelText(w.name + " · " + w.org, 8, 5, 10, PALETTE.paper, "left");
+    var collectedCount = level.collected.filter(Boolean).length;
+    pixelText("★ " + collectedCount + "/" + w.milestones.length, W - 8, 5, 10, PALETTE.coin, "right");
+
+    if (!allDone === false) {
+      // all collected — nudge toward the flag
+    }
+    if (level.collected.every(Boolean)) {
+      pixelText("GOAL FLAG UNLOCKED →", W / 2, H - 16, 8, PALETTE.coin, "center");
+    }
+
+    if (level.popup) renderPopup(level.popup, w.accent);
+  }
+
+  function renderPopup(m, accent) {
+    var pw = W - 60, ph = 150, px = 30, py = (H - ph) / 2;
+    rect(px, py, pw, ph, PALETTE.paper);
+    ctx.strokeStyle = PALETTE.ink; ctx.lineWidth = 3; ctx.strokeRect(px, py, pw, ph);
+    rect(px, py, pw, 22, accent);
+    pixelText(m.label.toUpperCase(), px + 10, py + 6, 10, PALETTE.ink, "left");
+
+    ctx.fillStyle = PALETTE.ink;
+    ctx.font = "10px " + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    wrapText(m.text, px + 12, py + 32, pw - 24, 14);
+
+    pixelText("TAP OR ENTER TO CONTINUE", px + pw / 2, py + ph - 18, 8, "#7A6A4A", "center");
+  }
+
+  function wrapText(text, x, y, maxWidth, lineHeight) {
+    var words = text.split(" ");
+    var line = "", ly = y;
+    for (var n = 0; n < words.length; n++) {
+      var test = line + words[n] + " ";
+      if (ctx.measureText(test).width > maxWidth && line !== "") {
+        ctx.fillText(line, x, ly); line = words[n] + " "; ly += lineHeight;
+      } else line = test;
+    }
+    ctx.fillText(line, x, ly);
+  }
+
+  function renderComplete() {
+    drawSky();
+    drawCloud(60, 40, 1.2); drawCloud(360, 60, 1);
+    drawGround(0);
+    pixelText("QUEST COMPLETE", W / 2, 30, 18, PALETTE.coin, "center");
+    pixelText("12 / 12 wins collected across 4 worlds", W / 2, 56, 9, PALETTE.paper, "center");
+
+    var stats = [["7+", "years, cross-org delivery"], ["$9M+", "budget governed"], ["7", "regions aligned"], ["1,000+", "hours saved / year"]];
+    var cw = W / stats.length;
+    stats.forEach(function (s, i) {
+      pixelText(s[0], cw * i + cw / 2, 110, 14, PALETTE.coin, "center");
+      pixelText(s[1], cw * i + cw / 2, 130, 7, PALETTE.paperEdge, "center");
+    });
+
+    pixelText("PRESS ENTER TO REPLAY THE MAP", W / 2, H - 30, 8, PALETTE.paperEdge, "center");
+    pixelText("→ full case log linked below", W / 2, H - 16, 8, PALETTE.coin, "center");
+  }
+
+  // ---------------- loop ----------------
+
+  function loop() {
+    update();
+    ctx.clearRect(0, 0, W, H);
+    if (SCREEN === "title") renderTitle();
+    else if (SCREEN === "map") renderMap();
+    else if (SCREEN === "level" && level) renderLevel();
+    else if (SCREEN === "complete") renderComplete();
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+})();
+</script>

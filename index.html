@@ -1,0 +1,616 @@
+<title>Program Ops Console</title>
+<style>
+  :root {
+    --paper: #F2F5F7;
+    --paper-raised: #FFFFFF;
+    --ink: #16222C;
+    --ink-soft: #4C606E;
+    --line: rgba(22, 34, 44, 0.14);
+    --line-strong: rgba(22, 34, 44, 0.26);
+    --teal: #1E7A72;
+    --teal-soft: rgba(30, 122, 114, 0.10);
+    --amber: #B4681F;
+    --amber-soft: rgba(180, 104, 31, 0.12);
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --nav-h: 52px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0E1620;
+      --paper-raised: #131D28;
+      --ink: #E7EEF2;
+      --ink-soft: #93A7B3;
+      --line: rgba(231, 238, 242, 0.14);
+      --line-strong: rgba(231, 238, 242, 0.24);
+      --teal: #4FBFB2;
+      --teal-soft: rgba(79, 191, 178, 0.12);
+      --amber: #E0A458;
+      --amber-soft: rgba(224, 164, 88, 0.14);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #0E1620;
+    --paper-raised: #131D28;
+    --ink: #E7EEF2;
+    --ink-soft: #93A7B3;
+    --line: rgba(231, 238, 242, 0.14);
+    --line-strong: rgba(231, 238, 242, 0.24);
+    --teal: #4FBFB2;
+    --teal-soft: rgba(79, 191, 178, 0.12);
+    --amber: #E0A458;
+    --amber-soft: rgba(224, 164, 88, 0.14);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 1.5rem 1.5rem 5rem; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- top nav ---------- */
+
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -1.5rem 2.4rem;
+    padding: 0 1.5rem;
+  }
+
+  .topnav .brand {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .topnav nav {
+    display: flex;
+    gap: 0.3rem;
+    overflow-x: auto;
+  }
+
+  .topnav a.nav-link {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .topnav a.nav-link:hover,
+  .topnav a.nav-link:focus-visible { color: var(--ink); background: var(--teal-soft); }
+
+  .topnav a.nav-link.play { color: var(--amber); }
+
+  /* ---------- header / status bar ---------- */
+
+  header.intro { margin-bottom: 1rem; }
+
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-soft);
+    flex: none;
+  }
+
+  .status-bar .label { color: var(--teal); }
+
+  h1 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 4.4vw, 2.35rem);
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+    text-wrap: balance;
+  }
+
+  .role-target {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.8rem;
+    max-width: 60ch;
+  }
+
+  .signals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .signal { background: var(--paper-raised); padding: 0.9rem 1rem; }
+
+  .signal .num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  .signal .cap { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.15rem; }
+
+  /* ---------- section headings ---------- */
+
+  section { scroll-margin-top: calc(var(--nav-h) + 14px); }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 3.4rem 0 1.1rem;
+  }
+
+  .section-head .label { white-space: nowrap; }
+  .section-head .rule { height: 1px; background: var(--line); flex: 1; }
+
+  p.intro { color: var(--ink-soft); max-width: 62ch; margin: 0 0 1.6rem; }
+
+  /* ---------- card shell (shared: case / project) ---------- */
+
+  .card-entry {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper-raised);
+    margin-bottom: 1.1rem;
+    overflow: hidden;
+  }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.15rem 1.3rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .card-head:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
+
+  .entry-id {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+  }
+
+  .entry-title { font-weight: 600; font-size: 1.05rem; margin: 0; text-wrap: balance; }
+  .entry-meta { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.3rem; }
+
+  .chev {
+    font-family: var(--mono);
+    color: var(--ink-soft);
+    flex: none;
+    transition: transform 0.18s ease;
+    margin-top: 0.2rem;
+  }
+
+  .card-entry[open] .chev { transform: rotate(90deg); }
+
+  .card-body { padding: 0 1.3rem 1.4rem; border-top: 1px solid var(--line); }
+
+  .xyz {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 0.35rem 1rem;
+    margin: 1.1rem 0;
+    font-size: 0.95rem;
+  }
+
+  .xyz dt {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    padding-top: 0.15rem;
+  }
+
+  .xyz dd { margin: 0; }
+
+  .stat-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+
+  .stat-chip {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    background: var(--amber-soft);
+    color: var(--amber);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .link-row { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 1rem; }
+
+  .entry-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--teal);
+    text-decoration: none;
+  }
+  .entry-link:hover { text-decoration: underline; }
+
+  /* ---------- resume section ---------- */
+
+  .resume-summary { font-size: 0.98rem; max-width: 64ch; margin: 0 0 1.8rem; }
+
+  .timeline { border-left: 2px solid var(--line); padding-left: 1.2rem; display: flex; flex-direction: column; gap: 1.3rem; }
+
+  .tl-item { position: relative; }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -1.53rem;
+    top: 0.3rem;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  .tl-title { font-weight: 600; font-size: 0.98rem; }
+  .tl-org { font-size: 0.85rem; color: var(--ink-soft); font-family: var(--mono); margin-top: 0.15rem; }
+  .tl-note { font-size: 0.88rem; margin-top: 0.35rem; max-width: 58ch; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.8rem; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .cred-row { margin-top: 1.6rem; font-size: 0.85rem; color: var(--ink-soft); }
+  .cred-row strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- companion / game callout ---------- */
+
+  .console-link {
+    display: block;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    padding: 1.3rem 1.4rem;
+    text-decoration: none;
+    color: inherit;
+    background: linear-gradient(135deg, var(--amber-soft), transparent 60%);
+    transition: border-color 0.15s ease;
+  }
+
+  .console-link:hover,
+  .console-link:focus-visible { border-color: var(--amber); }
+
+  .console-link .label { color: var(--amber); margin-bottom: 0.4rem; }
+  .console-link .cl-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.3rem; }
+  .console-link .cl-desc { color: var(--ink-soft); font-size: 0.92rem; max-width: 56ch; }
+  .console-link .cl-arrow { font-family: var(--mono); margin-left: 0.3rem; }
+
+  /* ---------- footer / contact ---------- */
+
+  footer {
+    margin-top: 3.4rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+
+  footer a { color: var(--teal); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .foot-links { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+</style>
+
+<div class="topnav">
+  <a class="brand" href="#top">IVAN KHRAPACH ///</a>
+  <nav>
+    <a class="nav-link" href="#resume">Resume</a>
+    <a class="nav-link" href="#cases">Case Studies</a>
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link play" href="program-quest.html" target="_self">Play ↗</a>
+  </nav>
+</div>
+
+<div class="wrap" id="top">
+
+  <header class="intro">
+    <div class="status-bar">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="label">Available — targeting Warsaw, PL</span>
+    </div>
+    <h1>Program Ops Console</h1>
+    <p class="role-target">Ivan Khrapach — Technical Program Manager, targeting Google's Technical Infrastructure team, Warsaw. Resume, case studies, and side projects below, read the way an on-call TPM would write them up.</p>
+
+    <div class="signals">
+      <div class="signal"><div class="num">7+</div><div class="cap">years, cross-org delivery</div></div>
+      <div class="signal"><div class="num">$9M+</div><div class="cap">budget governed</div></div>
+      <div class="signal"><div class="num">7</div><div class="cap">global regions aligned</div></div>
+      <div class="signal"><div class="num">200+</div><div class="cap">stakeholders, live portfolio</div></div>
+    </div>
+  </header>
+
+  <section id="resume">
+    <div class="section-head">
+      <span class="label">01 · Resume</span>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+
+    <p class="resume-summary">Technical Program Manager with 7+ years leading cross-functional and cross-organizational programs through ambiguity — from enterprise finance transformation to embedded operations work supporting Google Cloud Marketing Strategy &amp; Operations. Builds the structure that doesn't yet exist: OKR and goal frameworks, RASCI governance, risk and dependency tracking, and executive-ready reporting that turns competing priorities into decisions leadership can act on. Ships automation and internal tools directly — Google Apps Script and a Gemini app built via Google AI Studio — rather than only directing others to build them. Based in Toronto, with prior Warsaw-based work experience (CBRE, 2018–2022) and full authorization to work in Poland.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-title">Chief of Staff, Google Cloud Marketing Strategy &amp; Operations</div>
+        <div class="tl-org">Senior Consultant, Deloitte Canada (embedded) · Toronto · Mar 2026 – Present</div>
+        <div class="tl-note">$9M+ cost-center governance, 7-region vendor operating model, AI-driven reporting automation. See Case Log for the full write-ups.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Senior Program Manager – CEO Office</div>
+        <div class="tl-org">Yuno, global fintech · Toronto · Nov 2025 – Mar 2026</div>
+        <div class="tl-note">Launched a company-wide OKR framework; partnered directly with the Head of Product and Head of Engineering to redesign team topology.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Finance Transformation Office Program Manager</div>
+        <div class="tl-org">Cadillac Fairview · Toronto · Jan 2024 – Nov 2025</div>
+        <div class="tl-note">100+ initiatives/year across 200+ stakeholders; compressed an 18-month roadmap to 10 months; scaled Asana to 200+ users.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Technical Project Manager — Investments &amp; International Finance</div>
+        <div class="tl-org">Cadillac Fairview · Toronto · Jun 2023 – Dec 2023</div>
+        <div class="tl-note">Finance-system implementation and governance redesign feeding into the transformation program that followed.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Project Manager, Finance &amp; Data Transformation</div>
+        <div class="tl-org">CBRE · Warsaw, Poland · Apr 2022 – Dec 2022</div>
+        <div class="tl-note">Delivered 70% of a two-year roadmap in 10 months across 15+ cross-functional teams using Agile/Scrum.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Finance &amp; Business Analyst</div>
+        <div class="tl-org">CBRE · Warsaw, Poland · Nov 2018 – Mar 2022</div>
+        <div class="tl-note">P&amp;L analysis, forecasting, and executive commentary across 18 business units, including enterprise clients such as Google.</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">OKR / goal-framework design</span>
+      <span class="tag">RASCI governance</span>
+      <span class="tag">Risk &amp; dependency management</span>
+      <span class="tag">Executive reporting</span>
+      <span class="tag">Agile / Scrum</span>
+      <span class="tag">Google Apps Script</span>
+      <span class="tag">Gemini / Google AI Studio</span>
+      <span class="tag">Python · SQL</span>
+      <span class="tag">Asana (Workflow Specialist)</span>
+    </div>
+
+    <div class="cred-row"><strong>Certifications —</strong> PSPO I (Scrum.org) · Asana Workflow Specialist &amp; Foundations · Generative AI Fundamentals (Databricks) · Learn SQL (Codecademy)</div>
+    <div class="cred-row"><strong>Education —</strong> Bachelor of Global Business &amp; Finance, SGH Warsaw School of Economics (2016–2021)</div>
+  </section>
+
+  <section id="cases">
+    <div class="section-head">
+      <span class="label">02 · Case Log</span>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <p class="intro">Three real programs, each run through under genuine ambiguity — no pre-defined process, competing stakeholders, and a deadline. Expand any entry for the full write-up.</p>
+
+    <details class="card-entry" open>
+      <summary class="card-head">
+        <div>
+          <div class="entry-id">CASE-01 · COST-CENTER-362</div>
+          <p class="entry-title">A $9M+ cost center with no clean baseline</p>
+          <p class="entry-meta">Deloitte Canada, embedded — Google Cloud Marketing S&amp;O · Mar 2026–present</p>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </summary>
+      <div class="card-body">
+        <dl class="xyz">
+          <dt>SITUATION</dt>
+          <dd>Q2–Q4 spend on a $9M+ cost center had unexplained variances and unsubmitted expenditures, with no baseline reconciled across quarters.</dd>
+          <dt>RESPONSE</dt>
+          <dd>Reconciled the full Q2–Q4 spend trajectory, stood up a weekly budget-review cadence, and shipped automated "Spend AI" variance notifications so cost-center owners caught issues before quarter-close instead of after.</dd>
+          <dt>RESULT</dt>
+          <dd>Found $800K+ in misclassified spend, reallocated $300K of Q3 underspend against a projected Q4 deficit, and landed the center at net-zero with an ongoing 2% variance-tracking process still running today.</dd>
+        </dl>
+        <div class="stat-row">
+          <span class="stat-chip">$800K+ found</span>
+          <span class="stat-chip">net-zero close</span>
+          <span class="stat-chip">2% variance SLA</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="card-entry">
+      <summary class="card-head">
+        <div>
+          <div class="entry-id">CASE-02 · XWF-GOVERNANCE-7R</div>
+          <p class="entry-title">One operating model across two vendors, seven regions</p>
+          <p class="entry-meta">Deloitte Canada, embedded — Google Cloud Marketing S&amp;O · Mar 2026–present</p>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </summary>
+      <div class="card-body">
+        <dl class="xyz">
+          <dt>SITUATION</dt>
+          <dd>GCM's extended-workforce model spans Deloitte and Accenture across North America, LATAM, EMEA, JAPAC, Public Sector, and Partner Marketing — task ownership and staffing overlap had never been audited end to end.</dd>
+          <dt>RESPONSE</dt>
+          <dd>Co-led operational audits region by region, mapped functional overlap and automation opportunities, and clarified ownership with a RASCI matrix maintained as the standing governance record.</dd>
+          <dt>RESULT</dt>
+          <dd>Co-authored and presented a unified action plan and executive recommendation deck that reset supplier collaboration and resource allocation across every region.</dd>
+        </dl>
+        <div class="stat-row">
+          <span class="stat-chip">7 regions audited</span>
+          <span class="stat-chip">2 vendor orgs aligned</span>
+          <span class="stat-chip">1 RASCI system of record</span>
+        </div>
+      </div>
+    </details>
+
+    <details class="card-entry">
+      <summary class="card-head">
+        <div>
+          <div class="entry-id">CASE-03 · FTO-ROADMAP-COMPRESS</div>
+          <p class="entry-title">An 18-month roadmap that had to move faster</p>
+          <p class="entry-meta">Cadillac Fairview, Finance Transformation Office · Jan 2024–Nov 2025</p>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </summary>
+      <div class="card-body">
+        <dl class="xyz">
+          <dt>SITUATION</dt>
+          <dd>A finance transformation portfolio of 100+ initiatives a year, spanning 200+ Finance and IT stakeholders, was tracking to an 18-month waterfall timeline with no shared operating cadence.</dd>
+          <dt>RESPONSE</dt>
+          <dd>Introduced Agile ways of working and a standing governance cadence — executive dashboards, risk/issue tracking, VP steering reviews — and led department-wide adoption of Asana as the operating system behind it, live for 200+ users.</dd>
+          <dt>RESULT</dt>
+          <dd>Compressed the roadmap to ~10 months and cut financial close/reporting time by roughly 30%, with the governance cadence still running the portfolio today.</dd>
+        </dl>
+        <div class="stat-row">
+          <span class="stat-chip">18mo → 10mo</span>
+          <span class="stat-chip">~30% faster close</span>
+          <span class="stat-chip">200+ users onboarded</span>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <span class="label">03 · Projects</span>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <p class="intro">Two self-directed builds — evidence of hands-on technical ownership outside a formal engineering title.</p>
+
+    <details class="card-entry" open>
+      <summary class="card-head">
+        <div>
+          <div class="entry-id">PROJECT-01 · RECOVERFLOW</div>
+          <p class="entry-title">Stripe payment-recovery SaaS — solo build</p>
+          <p class="entry-meta">React, TypeScript, Supabase/Postgres, Stripe OAuth</p>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </summary>
+      <div class="card-body">
+        <dl class="xyz">
+          <dt>PROBLEM</dt>
+          <dd>SaaS founders in the $5K–$50K MRR range lose subscription revenue to expired cards and failed charges, with no lightweight tool built for their scale.</dd>
+          <dt>BUILD</dt>
+          <dd>Designed and shipped the full product solo — pre-dunning card-expiration alerts, automated win-back email flows on Supabase Edge Functions, a revenue-attribution dashboard, and a subscription-pause flow to cut involuntary churn.</dd>
+          <dt>HARDENING</dt>
+          <dd>Shipped a full security pass: role-based access control, Postgres row-level security, HMAC-signed OAuth state tokens, and a locked-down CORS policy.</dd>
+        </dl>
+        <div class="stat-row">
+          <span class="stat-chip">0→1, solo</span>
+          <span class="stat-chip">5 core workflows shipped</span>
+          <span class="stat-chip">RLS + RBAC + HMAC OAuth</span>
+        </div>
+        <div class="link-row">
+          <a class="entry-link" href="https://www.recover-flow.com/" target="_blank" rel="noopener">↗ recover-flow.com</a>
+          <a class="entry-link" href="https://github.com/MrIvanKh" target="_blank" rel="noopener">↗ github.com/MrIvanKh</a>
+          <a class="entry-link" href="http://linkedin.com/in/mr-ivan" target="_blank" rel="noopener">↗ linkedin.com/in/mr-ivan</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="card-entry">
+      <summary class="card-head">
+        <div>
+          <div class="entry-id">PROJECT-02 · RAISLYHQ</div>
+          <p class="entry-title">Automated job-search SaaS platform</p>
+          <p class="entry-meta">Founder — product direction, with developer &amp; UX collaborators</p>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </summary>
+      <div class="card-body">
+        <dl class="xyz">
+          <dt>PROBLEM</dt>
+          <dd>Job seekers manage search, applications, and tracking across a pile of disconnected tools with no single system of record.</dd>
+          <dt>BUILD</dt>
+          <dd>Took a browser-based SaaS product from concept to MVP — owned product direction, scope, and competitive analysis while directing developer and UX collaborators through delivery.</dd>
+          <dt>OUTCOME</dt>
+          <dd>Shipped and iterated on monetization and acquisition through the MVP stage — direct 0→1 product ownership outside a formal PM title.</dd>
+        </dl>
+        <div class="stat-row">
+          <span class="stat-chip">Concept → MVP</span>
+          <span class="stat-chip">Founder-led</span>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section id="play">
+    <div class="section-head">
+      <span class="label">04 · Play</span>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <a class="console-link" href="program-quest.html" target="_blank" rel="noopener">
+      <div class="label">Interactive</div>
+      <div class="cl-title">Program Quest — walk the four-year run yourself</div>
+      <div class="cl-desc">A small retro-style playable career map: four worlds (CBRE Warsaw → Cadillac Fairview → Yuno → Google Cloud Marketing), twelve real wins to collect along the way.</div>
+      <span class="cl-arrow">→</span>
+    </a>
+  </section>
+
+  <footer>
+    <div>Ivan Khrapach · Toronto, Canada, relocating to Warsaw, PL · authorized to work in Poland</div>
+    <div class="foot-links">
+      <a href="mailto:ivan.khrapach1@gmail.com">ivan.khrapach1@gmail.com</a>
+      <a href="http://linkedin.com/in/mr-ivan">linkedin.com/in/mr-ivan</a>
+      <a href="https://github.com/MrIvanKh">github.com/MrIvanKh</a>
+    </div>
+  </footer>
+
+</div>
