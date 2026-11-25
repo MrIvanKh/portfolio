@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add('js');addEventListener('beforeprint',function(){document.documentElement.classList.remove('js')});</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ivan Khrapach</title>
-<meta name="description" content="Work that's stuck between teams, made to move. Stories from work, things I build, a small game and notes.">
+<meta name="description" content="Work that's stuck between teams, made to move. Stories from work, things I build on weekends, and a small game about my career.">
+<link rel="canonical" href="https://mrivankh.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mrivankh.github.io/portfolio/">
+<meta property="og:title" content="Ivan Khrapach · Stuck between teams?">
+<meta property="og:description" content="Stories from work, things I build on weekends, and a small game about my career.">
+<meta property="og:image" content="https://mrivankh.github.io/portfolio/img/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ivan Khrapach on stage with a microphone, next to the headline Stuck between teams?">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,7 +42,6 @@ a{color:inherit}
 
 /* cover */
 .cover{padding:56px 0 40px;border-bottom:2px solid var(--rule)}
-.issue{display:flex;justify-content:space-between;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:28px}
 .cover h1{font-family:var(--serif);font-weight:900;font-size:clamp(64px,13vw,184px);line-height:.86;letter-spacing:-.045em;margin:0}
 .cover h1 em{font-style:italic;font-weight:400;color:var(--accent)}
 .cover-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;margin-top:40px;align-items:end}
@@ -41,6 +51,7 @@ a{color:inherit}
 .portrait img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;border:2px solid var(--ink);box-shadow:10px 10px 0 var(--accent);filter:saturate(.9) contrast(1.03)}
 .portrait figcaption{margin-top:16px;color:var(--muted)}
 .dek{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.25;margin:0}
+.cred{margin:18px 0 0;max-width:56ch;font-size:16px;line-height:1.5;color:var(--muted)}
 .status{margin-top:18px;display:inline-flex;align-items:center;gap:10px}
 .dot{width:9px;height:9px;border-radius:50%;background:#2E9E5B;display:inline-block}
 .toc{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
@@ -97,7 +108,6 @@ a{color:inherit}
 .notes a.t{text-decoration:none}
 .notes a.t:hover{color:var(--accent)}
 
-.soon{font-family:var(--serif);font-style:italic;font-size:clamp(28px,3.6vw,44px);color:var(--muted);margin:0;padding-top:18px;border-top:2px solid var(--rule)}
 
 /* back page */
 .back{padding:96px 0 40px}
@@ -105,6 +115,8 @@ a{color:inherit}
 .back h2 a{text-decoration:none;border-bottom:8px solid var(--accent)}
 .back h2 a:hover{color:var(--accent)}
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:64px}
+.go{font-weight:600;text-decoration-thickness:2px;text-underline-offset:4px}
+.go:hover{color:var(--accent)}
 .btn{border:2px solid var(--ink);padding:12px 18px;text-decoration:none;font-weight:600}
 .btn:hover{background:var(--ink);color:var(--paper)}
 .colophon{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--rule);padding-top:14px;color:var(--muted)}
@@ -118,8 +130,8 @@ a{color:inherit}
 .play h2{font-family:var(--serif);font-weight:900;font-size:clamp(40px,6.2vw,84px);line-height:.95;letter-spacing:-.035em;margin:0 0 28px}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.rv.in{opacity:1;transform:none}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.blink{animation:none}}
 
 @media (max-width:860px){
@@ -128,6 +140,14 @@ a{color:inherit}
   .mast nav .hide-s{display:none}
   .cover-grid{grid-template-columns:1fr;gap:28px}
   .cover-top{grid-template-columns:1fr;gap:24px}
+  .cover .wrap{display:flex;flex-direction:column}
+  .cover-top,.cover-grid,.cover-grid>div:first-child{display:contents}
+  .cover h1{order:1}
+  .dek{order:2;margin-top:24px}
+  .cred{order:3}
+  .status{order:4;align-self:flex-start}
+  .portrait{order:5;margin-top:32px}
+  .toc{order:6;margin-top:36px}
   .portrait{max-width:420px}
   .portrait img{box-shadow:6px 6px 0 var(--accent)}
   .ch,.play{padding:48px 0}
@@ -161,17 +181,17 @@ a{color:inherit}
 <main>
 <section class="cover" id="contents">
   <div class="wrap">
-    <div class="issue mono"><span>Issue 01</span><span>November 2026</span><span>Warsaw / Toronto</span></div>
     <div class="cover-top">
       <h1>Stuck<br>between<br><em>teams?</em></h1>
       <figure class="portrait">
         <img src="img/ivan.jpg" alt="Ivan Khrapach smiling on stage with a microphone, in glasses and a light cardigan" width="880" height="1176">
-        <figcaption class="mono">Ivan Khrapach. Usually behind the stage, sometimes on it.</figcaption>
+        <figcaption class="mono">Usually behind the stage, sometimes on it.</figcaption>
       </figure>
     </div>
     <div class="cover-grid">
       <div>
-        <p class="dek">That's the work I take. I find the owner, build what's missing, and keep it moving until it's done. This issue: four stories from work, a game, and things I build on weekends.</p>
+        <p class="dek">That's the work I take on. I find the owner, build what's missing, and keep it moving until it's done.</p>
+        <p class="cred">Most recently Chief of Staff at Google Cloud Marketing, through Deloitte. Before that: Yuno, Cadillac Fairview, CBRE.</p>
         <div class="status mono"><span class="dot"></span>Available · Warsaw, Poland · Authorized to work in Poland</div>
       </div>
       <ol class="toc">
@@ -182,7 +202,6 @@ a{color:inherit}
         <li><a href="#s5"><span class="n">05</span><span class="t">Investors don't write user stories</span><span class="mono">Story</span></a></li>
         <li><a href="#s6"><span class="n">06</span><span class="t">100 initiatives, nowhere to see them</span><span class="mono">Story</span></a></li>
         <li><a href="#s7"><span class="n">07</span><span class="t">More from the workshop</span><span class="mono">Builds</span></a></li>
-        <li><a href="#s8"><span class="n">08</span><span class="t">Notes and templates</span><span class="mono">Soon</span></a></li>
       </ol>
     </div>
   </div>
@@ -210,7 +229,7 @@ a{color:inherit}
   <div class="wrap">
     <div class="ch-head">
       <div class="num">02</div>
-      <div><span class="num-inline">02</span><div class="kicker mono">Build · shipped · free</div>
+      <div><span class="num-inline">02</span><div class="kicker mono">Build · live · free</div>
         <h2 class="rv">I got tired of "remote" jobs that weren't. So I built a filter.</h2></div>
     </div>
     <div class="ch-body">
@@ -218,6 +237,7 @@ a{color:inherit}
       <div class="rv">
         <p class="lead">Job hunting on LinkedIn means scrolling past the same posts, reposted, and opening "remote" roles that turn out to be hybrid three paragraphs down. Jobs Cleaner is a Chrome extension that hides what you've already seen, filters out the fake-remote ones and flags reposts.</p>
         <p>I'm not an engineer. I built it by directing AI tools, the same way I run a program: clear scope, small releases, test it on real use.</p>
+        <p><a class="go" href="https://chromewebstore.google.com/detail/jobs-cleaner-for-linkedin/mppjlcdbaiefhhocijblbikbkpenpkjk" target="_blank" rel="noopener">Get it on the Chrome Web Store →</a></p>
       </div>
       <div class="stat rv"><div class="big">0</div><div class="cap">times I want to read the same job post again.</div></div>
     </div>
@@ -289,14 +309,14 @@ a{color:inherit}
     <div class="ch-body">
       <div class="spacer"></div>
       <div class="rv">
-        <p class="lead">Finance and Technology were running 100+ initiatives a year and no single place to see them all. I built the PMO: intake, prioritization, a delivery rhythm people could set their week by.</p>
-        <p>I also built the Asana portfolio system used to track the biggest programs and report to the senior leadership committee, and ran the VP-level steering committees. The one nobody skipped.</p>
+        <p class="lead">Finance and Technology were running 100+ initiatives a year and no single place to see them all. I built the PMO: intake, prioritization, a weekly delivery rhythm.</p>
+        <p>I also built the Asana portfolio system used to track the biggest programs and report to the senior leadership committee, and ran the VP-level steering committees.</p>
       </div>
       <div class="stat rv"><div class="big">18→10</div><div class="cap">An 18-month roadmap, delivered in about 10.</div></div>
     </div>
     <aside class="side rv">
       <div class="mono">Before all this</div>
-      <p>I started in accounting at CBRE in Warsaw, then ran a data migration with 15+ teams and traced a $100M+ ledger gap to its root cause. I still read the spreadsheet before the slide.</p>
+      <p>I started in accounting at CBRE in Warsaw, then coordinated 15+ teams on a data migration and traced a $100M+ ledger gap to its root cause. I still read the spreadsheet before the slide.</p>
     </aside>
   </div>
 </section>
@@ -331,16 +351,6 @@ a{color:inherit}
   </div>
 </section>
 
-<section class="ch" id="s8">
-  <div class="wrap">
-    <div class="ch-head">
-      <div class="num">08</div>
-      <div><span class="num-inline">08</span><div class="kicker mono">Writing and things to steal</div>
-        <h2 class="rv">Notes and templates.</h2></div>
-    </div>
-    <p class="soon rv">Coming soon.</p>
-  </div>
-</section>
 
 <section class="back" id="write">
   <div class="wrap">
@@ -351,7 +361,7 @@ a{color:inherit}
       <a class="btn" href="https://www.linkedin.com/in/mr-ivan" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/MrIvanKh" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <div class="colophon mono"><span>Issue 01 · last updated November 2026</span><span>Set in Fraunces and Inter</span></div>
+    <div class="colophon mono"><span>Last updated November 2026</span><span>Set in Fraunces and Inter</span></div>
   </div>
 </section>
 </main>

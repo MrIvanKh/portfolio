@@ -58,7 +58,7 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;touch
     <div class="map-info" id="mapi"><div><div class="t" id="mt"></div><div id="ms"></div></div><button class="btn red" id="mplay">PLAY ▶</button></div>
     <div class="ov on" id="title"><h1>PROGRAM<br>QUEST</h1><p class="sub">Five worlds. All true.<br>A coffee and a dumbbell hidden in each.</p><button class="btn red" id="start">PRESS START</button><p class="sub" style="margin-top:1.2em;font-size:.8em">← → MOVE · SPACE JUMP · ENTER TALK</p></div>
     <div class="ov" id="clear"><h2 id="clh"></h2><p id="clt"></p><p class="sub" id="cls"></p><button class="btn" id="clb">CONTINUE ▶</button></div>
-    <div class="ov" id="final"><h1>QUEST<br>COMPLETE</h1><p class="sub">From a spreadsheet in Warsaw to seven regions at Google, through Deloitte.</p><div class="stats" id="fst"></div><p id="fact" style="color:#E8D6A3"></p><div><a class="btn red" href="mailto:ivan.khrapach1@gmail.com" target="_top">WRITE TO ME ✉</a><button class="btn" id="again">PLAY AGAIN</button></div><p class="sub" style="margin-top:1em;font-size:.75em">Every world is true. The hidden coffee is not.</p></div>
+    <div class="ov" id="final"><h1>QUEST<br>COMPLETE</h1><p class="sub">From a spreadsheet in Warsaw to seven regions at Google Cloud Marketing, through Deloitte.</p><div class="stats" id="fst"></div><p id="fact" style="color:#E8D6A3"></p><div><a class="btn red" href="mailto:ivan.khrapach1@gmail.com" target="_top">WRITE TO ME ✉</a><button class="btn" id="again">PLAY AGAIN</button></div><p class="sub" style="margin-top:1em;font-size:.75em">Every world is true. The hidden coffee is not.</p></div>
   </div>
   <div id="pad"><div class="g"><button id="bl" aria-label="Left">◀</button><button id="br" aria-label="Right">▶</button></div><button class="j" id="bj" aria-label="Jump">JUMP</button></div>
 </div>
@@ -119,9 +119,9 @@ var WORLDS=[
   intro:[['IVAN','Yuno, CEO Office. 300 people, growing fast, no shared goals. It\'s dark in here.'],['IVAN','Light every lamp and the way opens.']],
   outro:'Yuno, CEO Office. All 300+ people set goals in the first cycle, within six weeks.',
   miles:[['OKRS FOR 300+','Built the company OKR system with the CEO. All 300+ people set goals in the first cycle, within 6 weeks.'],['WHO OWNS WHAT','Worked with the Heads of Product and Engineering on ownership and ways of working during a restructuring.'],['90-DAY PLAN','Ran the leadership workshops that produced a 90-day execution plan.']]},
- {org:'Deloitte',place:'placed at Google Cloud Marketing',years:'Mar – Oct 2026',name:'WORLD 5 · GOOGLE, THROUGH DELOITTE',
+ {org:'Deloitte',place:'placed at Google Cloud Marketing',years:'Mar – Oct 2026',name:'WORLD 5 · GOOGLE CLOUD MARKETING, THROUGH DELOITTE',
   intro:[['IVAN','Deloitte placed me at Google Cloud Marketing. Seven regions, two vendors, everyone doing a bit of everything.'],['IVAN','Connect all seven regions.']],
-  outro:'Chief of Staff to the Head of Strategy & Operations, through Deloitte. One owner per region, one plan, and LATAM\'s automation spread to the rest.',
+  outro:'Chief of Staff to the Head of Strategy & Operations at Google Cloud Marketing, through Deloitte. One owner per region, one plan, and LATAM\'s automation spread to the rest.',
   miles:[['$800K FOUND','Ran financial reporting and analysis for a $36M cost center. Found $800K of misclassified spend; recommended moving $300K of underspend to close a deficit.'],['7 REGIONS, 2 VENDORS','Co-led an operating-model review across 7 regions and two vendor firms. Set RASCI ownership and escalation paths.'],['SPREAD THE GOOD STUFF','Scaled automations the regions had built locally. LATAM\'s alone was projected at 1,000+ hours a year.']]}
 ];
 
@@ -357,7 +357,7 @@ $('clb').addEventListener('click',function(){$('clear').classList.remove('on');v
 function fmt(s){s=Math.round(s);return Math.floor(s/60)+':'+('0'+s%60).slice(-2);}
 function showFinal(){state='final';L=null;var c=0,b=0;for(var k in RUN.secrets){if(k[0]==='c')c++;else b++;}
  $('fst').innerHTML='<div>TIME<b>'+fmt((performance.now()-RUN.t0)/1000)+'</b></div><div>COINS<b>'+RUN.coins+'</b></div><div>☕<b>'+c+'/5</b></div><div>🏋<b>'+b+'/5</b></div>';
- $('fact').textContent='8 years · 15 true stories · 300+ people on OKRs · 1,000+ hours a year saved (LATAM, projected)';$('final').classList.add('on');S.flag();}
+ $('fact').textContent='8 years · 15 true stories · 300+ people on OKRs · LATAM alone projected to save 1,000+ hours a year';$('final').classList.add('on');S.flag();}
 $('again').addEventListener('click',function(){$('final').classList.remove('on');progress=[false,false,false,false,false];mapSel=0;RUN={coins:0,t0:performance.now(),secrets:{}};toMap();});
 
 /* ---------------- loop ---------------- */
