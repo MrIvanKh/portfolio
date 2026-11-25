@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F3EEE4; --ink:#151412; --muted:#6B665D; --rule:#151412; --accent:#E5432D; --soft:#E6DFD1;
@@ -86,8 +86,6 @@ a{color:inherit}
 .screen{position:relative;border:3px solid var(--ink);background:#1B1B2A;aspect-ratio:16/9;max-height:620px;width:100%;overflow:hidden}
 .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .screen button{position:absolute;inset:0;width:100%;border:0;background:#1B1B2A;color:#FFF4D6;cursor:pointer;font-family:var(--mono);font-size:14px;letter-spacing:.1em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.screen button span.big{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5vw,64px);letter-spacing:-.03em;text-transform:none}
-.screen button:hover span.big{color:#FFC93C}
 .blink{animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
@@ -129,6 +127,47 @@ a{color:inherit}
 .feature-build{background:var(--soft)}
 .play h2{font-family:var(--serif);font-weight:900;font-size:clamp(40px,6.2vw,84px);line-height:.95;letter-spacing:-.035em;margin:0 0 28px}
 
+
+/* role tags */
+.titled{cursor:help;outline:none}
+.ch-head>div:last-child{position:relative}
+.rtag{position:absolute;left:0;top:calc(100% - 12px);z-index:5;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;max-width:460px;padding:14px 18px;background:var(--ink);color:var(--paper);font-size:12.5px;line-height:1.45;border-left:6px solid var(--accent);box-shadow:8px 8px 0 var(--accent);opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s}
+.rtag b{font-weight:500;text-transform:uppercase;letter-spacing:.08em;opacity:.6}
+.ch.invert .rtag{background:var(--paper);color:var(--ink)}
+.titled:hover+.rtag,.titled:focus+.rtag,.titled.open+.rtag{opacity:1;transform:none}
+.titled:hover,.titled:focus-visible{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:4px;text-underline-offset:8px}
+@media (hover:none){.titled::after{content:" ⓘ";font-size:.35em;vertical-align:middle;color:var(--accent);font-family:var(--mono)}}
+/* toc alt labels */
+.toc .lab{position:relative}
+.toc a:hover .lab,.toc a:focus .lab{font-size:0}
+.toc a:hover .lab::after,.toc a:focus .lab::after{content:attr(data-alt);font-size:12px;color:var(--accent)}
+/* masthead progress */
+.where{font-size:12px;letter-spacing:.06em;color:var(--muted);flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .3s}
+.where.on{opacity:1}
+.prog{height:3px;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+/* arcade cabinet */
+#start{background:radial-gradient(ellipse at 50% 45%,rgba(229,67,45,.35),transparent 60%),linear-gradient(#1B1A24 78%,#24222E 78%)!important;overflow:hidden}
+#start .cab{position:absolute;left:50%;top:4%;height:84%;transform:translateX(-50%);transform-origin:0 0;transition:transform .9s cubic-bezier(.6,0,.2,1);overflow:visible}
+#start .px{font-family:"Press Start 2P",monospace}
+#start .mq{font-size:15px;fill:#FFC93C}
+#start .ic{font-size:13px;fill:#FFF4D6;animation:blink 1s steps(1) infinite}
+#start .sm{font-size:7px;fill:#FFC93C}
+#start .tiny{font-size:6px;fill:#151412}
+#start .tiny.lt{fill:#FFB347}
+#start .coinl{font-size:9px;fill:#7A4B00}
+#start .coin{animation:bob 1.4s ease-in-out infinite}
+#start .slot{animation:glow 1.4s ease-in-out infinite}
+#start .cta{position:absolute;left:0;right:0;bottom:4%;text-align:center;color:#FFF4D6;font-size:13px;letter-spacing:.06em;text-transform:none}
+#start .ctab{background:#E5432D;color:#FFF4D6;padding:6px 12px;border:2px solid #FFF4D6;margin-right:6px}
+#start:hover .ctab,#start:focus-visible .ctab{background:#FFC93C;color:#151412}
+#start.going .cta{opacity:0;transition:opacity .2s}
+#start.going .coin,#start.going .ic{animation:none}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes glow{50%{opacity:.45}}
+.screen iframe{opacity:0;transition:opacity .35s}
+.screen iframe.on{opacity:1}
+@media (prefers-reduced-motion:reduce){#start .cab{transition:none}#start .coin,#start .slot{animation:none}}
+
 /* reveal */
 .js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .js .rv.in{opacity:1;transform:none}
@@ -148,6 +187,10 @@ a{color:inherit}
   .status{order:4;align-self:flex-start}
   .portrait{order:5;margin-top:32px}
   .toc{order:6;margin-top:36px}
+  .where{display:none}
+  .rtag{max-width:none;right:0}
+  #start .cab{height:80%;top:5%}
+  #start .cta{font-size:12px}
   .portrait{max-width:420px}
   .portrait img{box-shadow:6px 6px 0 var(--accent)}
   .ch,.play{padding:48px 0}
@@ -170,12 +213,14 @@ a{color:inherit}
 <header class="mast">
   <div class="wrap">
     <b>Ivan Khrapach</b>
+    <span class="where mono" id="where" aria-hidden="true"></span>
     <nav class="mono">
       <a href="#contents" class="hide-s">Contents</a>
       <a href="#play">Play</a>
       <a href="#write">Write to me</a>
     </nav>
   </div>
+  <div class="prog" id="prog"></div>
 </header>
 
 <main>
@@ -195,13 +240,13 @@ a{color:inherit}
         <div class="status mono"><span class="dot"></span>Available · Warsaw, Poland · Authorized to work in Poland</div>
       </div>
       <ol class="toc">
-        <li><a href="#s1"><span class="n">01</span><span class="t">300 people, one goal system</span><span class="mono">Story</span></a></li>
-        <li><a href="#s2"><span class="n">02</span><span class="t">A Chrome extension out of spite</span><span class="mono">Build</span></a></li>
-        <li><a href="#play"><span class="n">03</span><span class="t">Rather play it?</span><span class="mono">Game</span></a></li>
-        <li><a href="#s4"><span class="n">04</span><span class="t">Seven regions, one plan</span><span class="mono">Story</span></a></li>
-        <li><a href="#s5"><span class="n">05</span><span class="t">Investors don't write user stories</span><span class="mono">Story</span></a></li>
-        <li><a href="#s6"><span class="n">06</span><span class="t">100 initiatives, nowhere to see them</span><span class="mono">Story</span></a></li>
-        <li><a href="#s7"><span class="n">07</span><span class="t">More from the workshop</span><span class="mono">Builds</span></a></li>
+        <li><a href="#s1"><span class="n">01</span><span class="t">300 people, one goal system</span><span class="mono lab" data-alt="Yuno">Story</span></a></li>
+        <li><a href="#s2"><span class="n">02</span><span class="t">A Chrome extension out of spite</span><span class="mono lab" data-alt="Chrome extension">Build</span></a></li>
+        <li><a href="#play"><span class="n">03</span><span class="t">Rather play it?</span><span class="mono lab" data-alt="5 worlds">Game</span></a></li>
+        <li><a href="#s4"><span class="n">04</span><span class="t">Seven regions, one plan</span><span class="mono lab" data-alt="Deloitte · Google Cloud">Story</span></a></li>
+        <li><a href="#s5"><span class="n">05</span><span class="t">Investors don't write user stories</span><span class="mono lab" data-alt="Quantum Mosaic">Story</span></a></li>
+        <li><a href="#s6"><span class="n">06</span><span class="t">100 initiatives, nowhere to see them</span><span class="mono lab" data-alt="Cadillac Fairview">Story</span></a></li>
+        <li><a href="#s7"><span class="n">07</span><span class="t">More from the workshop</span><span class="mono lab" data-alt="Side projects">Builds</span></a></li>
       </ol>
     </div>
   </div>
@@ -212,7 +257,7 @@ a{color:inherit}
     <div class="ch-head">
       <div class="num">01</div>
       <div><span class="num-inline">01</span><div class="kicker mono">Story · filed from Yuno, a payments fintech</div>
-        <h2 class="rv">300 people, one goal system, cycle one.</h2></div>
+        <h2 class="rv titled" tabindex="0">300 people, one goal system, cycle one.</h2><div class="rtag mono" role="note"><b>Role</b><span>Chief of Staff, CEO Office</span><b>At</b><span>Yuno</span><b>When</b><span>Nov 2025 – Mar 2026</span><b>Scale</b><span>300+ people</span></div></div>
     </div>
     <div class="ch-body">
       <div class="spacer"></div>
@@ -230,7 +275,7 @@ a{color:inherit}
     <div class="ch-head">
       <div class="num">02</div>
       <div><span class="num-inline">02</span><div class="kicker mono">Build · live · free</div>
-        <h2 class="rv">I got tired of "remote" jobs that weren't. So I built a filter.</h2></div>
+        <h2 class="rv titled" tabindex="0">I got tired of "remote" jobs that weren't. So I built a filter.</h2><div class="rtag mono" role="note"><b>Role</b><span>Solo builder</span><b>At</b><span>Side project</span><b>When</b><span>2026</span><b>Scale</b><span>Live on the Chrome Web Store</span></div></div>
     </div>
     <div class="ch-body">
       <div class="spacer"></div>
@@ -252,10 +297,58 @@ a{color:inherit}
         <h2 class="rv">Rather play it?</h2></div>
     </div>
     <div class="screen rv" id="screen">
-      <button id="start" aria-label="Start Program Quest">
-        <span class="mono">Program Quest</span>
-        <span class="big">Five worlds. All true.</span>
-        <span class="mono blink">▶ Press to start</span>
+      <button id="start" aria-label="Insert a coin to play Program Quest">
+        <svg class="cab" id="cab" viewBox="0 0 360 640" aria-hidden="true">
+          <defs>
+            <pattern id="scan" width="4" height="2" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".22"/></pattern>
+            <radialGradient id="glass" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></radialGradient>
+          </defs>
+          <!-- marquee -->
+          <rect x="34" y="14" width="292" height="78" fill="#151412"/>
+          <rect x="44" y="24" width="272" height="58" fill="#24222E"/>
+          <text x="180" y="52" text-anchor="middle" class="px mq">PROGRAM</text>
+          <text x="180" y="72" text-anchor="middle" class="px mq">QUEST</text>
+          <!-- screen bezel -->
+          <rect x="24" y="92" width="312" height="236" fill="#E5432D" stroke="#151412" stroke-width="4"/>
+          <rect x="42" y="106" width="276" height="170" rx="6" fill="#151412"/>
+          <g id="cabscreen">
+            <rect x="52" y="116" width="256" height="144" fill="#1B1B2A"/>
+            <image href="img/quest-preview.png" x="52" y="116" width="256" height="144" preserveAspectRatio="xMidYMid slice" style="image-rendering:pixelated"/>
+            <rect x="52" y="116" width="256" height="144" fill="#14131C" opacity=".42"/>
+            <rect x="52" y="116" width="256" height="144" fill="url(#scan)"/>
+            <text x="180" y="184" text-anchor="middle" class="px ic" id="ictext">INSERT COIN</text>
+            <text x="180" y="204" text-anchor="middle" class="px sm">1 COIN - 5 WORLDS</text>
+            <rect x="52" y="116" width="256" height="144" fill="url(#glass)"/>
+          </g>
+          <rect x="52" y="116" width="256" height="144" fill="none" stroke="#000" stroke-width="2" opacity=".5" id="screenrect"/>
+          <text x="180" y="304" text-anchor="middle" class="px tiny">A TRUE STORY · 2018–2026</text>
+          <!-- control panel -->
+          <polygon points="24,328 336,328 352,394 8,394" fill="#F07A63" stroke="#151412" stroke-width="4"/>
+          <rect x="74" y="352" width="10" height="20" fill="#151412"/>
+          <circle cx="79" cy="350" r="11" fill="#E5432D" stroke="#151412" stroke-width="3"/>
+          <circle cx="240" cy="364" r="10" fill="#FFC93C" stroke="#151412" stroke-width="3"/>
+          <circle cx="272" cy="356" r="10" fill="#4A7BD0" stroke="#151412" stroke-width="3"/>
+          <!-- lower body -->
+          <rect x="34" y="394" width="292" height="214" fill="#E5432D" stroke="#151412" stroke-width="4"/>
+          <rect x="34" y="394" width="14" height="214" fill="#151412" opacity=".18"/>
+          <rect x="312" y="394" width="14" height="214" fill="#151412" opacity=".18"/>
+          <!-- coin door -->
+          <rect x="124" y="430" width="112" height="120" fill="#2A2733" stroke="#151412" stroke-width="4"/>
+          <rect x="146" y="452" width="28" height="40" fill="#151412"/>
+          <rect x="186" y="452" width="28" height="40" fill="#151412"/>
+          <rect class="slot" id="slot" x="157" y="460" width="6" height="22" fill="#FFB347"/>
+          <rect class="slot" x="197" y="460" width="6" height="22" fill="#FFB347"/>
+          <text x="180" y="520" text-anchor="middle" class="px tiny lt">25¢</text>
+          <text x="180" y="536" text-anchor="middle" class="px tiny lt">INSERT COIN</text>
+          <rect x="24" y="608" width="312" height="22" fill="#151412"/>
+          <!-- coin -->
+          <g id="coin" class="coin">
+            <circle cx="300" cy="470" r="20" fill="#FFC93C" stroke="#151412" stroke-width="3"/>
+            <circle cx="300" cy="470" r="13" fill="none" stroke="#C98A12" stroke-width="2"/>
+            <text x="300" y="476" text-anchor="middle" class="px coinl">IK</text>
+          </g>
+        </svg>
+        <span class="cta mono" id="cta"><span class="ctab">● Insert coin</span> to play · about 3 min</span>
       </button>
     </div>
     <p class="mono" style="margin-top:12px">← → to move · Space to jump · Enter to read · on phones, use the buttons</p>
@@ -267,7 +360,7 @@ a{color:inherit}
     <div class="ch-head">
       <div class="num">04</div>
       <div><span class="num-inline">04</span><div class="kicker mono">Story · filed from Google Cloud Marketing, through Deloitte</div>
-        <h2 class="rv">Seven regions, two vendors, one plan.</h2></div>
+        <h2 class="rv titled" tabindex="0">Seven regions, two vendors, one plan.</h2><div class="rtag mono" role="note"><b>Role</b><span>Chief of Staff to the Head of Strategy &amp; Operations</span><b>At</b><span>Deloitte, placed at Google Cloud Marketing</span><b>When</b><span>Mar – Oct 2026</span><b>Scale</b><span>7 regions, 2 vendors</span></div></div>
     </div>
     <div class="ch-body">
       <div class="spacer"></div>
@@ -286,7 +379,7 @@ a{color:inherit}
     <div class="ch-head">
       <div class="num">05</div>
       <div><span class="num-inline">05</span><div class="kicker mono">Story · filed from Quantum Mosaic, an investment-tech startup</div>
-        <h2 class="rv">Investors don't write user stories. Somebody has to.</h2></div>
+        <h2 class="rv titled" tabindex="0">Investors don't write user stories. Somebody has to.</h2><div class="rtag mono" role="note"><b>Role</b><span>Part-time, with the CEO and CTO</span><b>At</b><span>Quantum Mosaic</span><b>When</b><span>May – Nov 2025</span><b>Scale</b><span>3 enterprise pilots</span></div></div>
     </div>
     <div class="ch-body">
       <div class="spacer"></div>
@@ -304,7 +397,7 @@ a{color:inherit}
     <div class="ch-head">
       <div class="num">06</div>
       <div><span class="num-inline">06</span><div class="kicker mono">Story · filed from Cadillac Fairview, Toronto</div>
-        <h2 class="rv">100 initiatives a year, and nowhere to see them.</h2></div>
+        <h2 class="rv titled" tabindex="0">100 initiatives a year, and nowhere to see them.</h2><div class="rtag mono" role="note"><b>Role</b><span>Program Manager, Finance Transformation Office</span><b>At</b><span>Cadillac Fairview</span><b>When</b><span>2023 – 2025</span><b>Scale</b><span>100+ initiatives a year</span></div></div>
     </div>
     <div class="ch-body">
       <div class="spacer"></div>
@@ -367,18 +460,82 @@ a{color:inherit}
 </main>
 
 <script>
-document.getElementById('start').addEventListener('click', function () {
-  var f = document.createElement('iframe');
-  f.src = 'program-quest.html';
-  f.title = 'Program Quest';
-  document.getElementById('screen').appendChild(f);
-  this.remove();
-  f.addEventListener('load', function () { try { f.contentWindow.focus(); } catch (e) {} });
-});
+(function () {
+  var btn = document.getElementById('start'), screen = document.getElementById('screen');
+  var cab = document.getElementById('cab'), coin = document.getElementById('coin');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function clink() {
+    try {
+      var A = new (window.AudioContext || window.webkitAudioContext)(), t = A.currentTime;
+      [[988, 0], [1319, .09]].forEach(function (n) {
+        var o = A.createOscillator(), g = A.createGain();
+        o.type = 'square'; o.frequency.value = n[0];
+        g.gain.setValueAtTime(.06, t + n[1]); g.gain.exponentialRampToValueAtTime(.0001, t + n[1] + .25);
+        o.connect(g); g.connect(A.destination); o.start(t + n[1]); o.stop(t + n[1] + .3);
+      });
+    } catch (e) {}
+  }
+  function launch() {
+    var f = document.createElement('iframe');
+    f.src = 'program-quest.html'; f.title = 'Program Quest';
+    screen.appendChild(f);
+    f.addEventListener('load', function () {
+      f.classList.add('on');
+      setTimeout(function () { btn.remove(); }, 350);
+      try { f.contentWindow.focus(); } catch (e) {}
+    });
+  }
+  function zoom() {
+    var s = document.getElementById('screenrect').getBoundingClientRect();
+    var b = screen.getBoundingClientRect(), c = cab.getBoundingClientRect();
+    var k = Math.max(b.width / s.width, b.height / s.height) * 1.02;
+    var ox = s.left - c.left, oy = s.top - c.top;
+    var tx = (b.left - s.left) + (b.width - s.width * k) / 2, ty = (b.top - s.top) + (b.height - s.height * k) / 2;
+    cab.style.transformOrigin = ox + 'px ' + oy + 'px';
+    cab.style.transform = 'translateX(-50%) translate(' + tx + 'px,' + ty + 'px) scale(' + k + ')';
+  }
+  btn.addEventListener('click', function () {
+    if (btn.classList.contains('going')) return;
+    btn.classList.add('going'); clink();
+    if (reduce) { launch(); return; }
+    // coin flies into the slot
+    var t0 = performance.now(), dur = 520;
+    (function fly(now) {
+      var p = Math.min(1, (now - t0) / dur), e = p * p;
+      var x = -140 * e, y = -14 * Math.sin(p * Math.PI);
+      coin.setAttribute('transform', 'translate(' + (x + 300) + ',' + (y + 470) + ') scale(' + (1 - .4 * e) + ') translate(-300,-470)');
+      if (p < 1) requestAnimationFrame(fly);
+      else {
+        coin.style.display = 'none';
+        document.getElementById('ictext').textContent = 'CREDIT 01';
+        setTimeout(function () { zoom(); setTimeout(launch, 850); }, 380);
+      }
+    })(t0);
+  });
+})();
 var io = new IntersectionObserver(function (es) {
   es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+
+// role tags: tap to toggle on touch
+document.querySelectorAll('.titled').forEach(function (h) {
+  h.addEventListener('click', function () { h.classList.toggle('open'); });
+});
+// masthead progress
+var where = document.getElementById('where'), prog = document.getElementById('prog');
+var secs = [].slice.call(document.querySelectorAll('main section[id]')).filter(function (x) { return x.querySelector('.num'); });
+function onScroll() {
+  var h = document.documentElement, max = h.scrollHeight - innerHeight;
+  prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, scrollY / max) : 0) + ')';
+  var cur = null;
+  secs.forEach(function (x) { if (x.getBoundingClientRect().top < innerHeight * 0.4) cur = x; });
+  if (cur && cur.getBoundingClientRect().bottom > 80) {
+    where.textContent = cur.querySelector('.num').textContent + ' / 0' + secs.length + ' · ' + cur.querySelector('h2').textContent;
+    where.classList.add('on');
+  } else where.classList.remove('on');
+}
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
 </script>
 </body>
 </html>
