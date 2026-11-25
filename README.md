@@ -1,10 +1,8 @@
-# Program Ops Console
+# Ivan Khrapach
 
-A small career portfolio: resume, case studies, side projects, and a playable retro-style career map.
+A personal magazine: stories from work, things I build, a small game and notes.
 
-- `index.html` — the main console (resume, case studies, projects)
-- `program-quest.html` — the playable career map, linked from the console
+- `index.html`: the magazine (cover, chapters, back page)
+- `program-quest.html`: the retro game, played inside chapter 03
 
-No build step, no dependencies — static HTML/CSS/vanilla JS. Open `index.html` directly, or serve the folder with any static file server.
-
-To host live (e.g. via GitHub Pages): Settings → Pages → Deploy from branch → `main` / root.
+No build step, no dependencies. Static HTML/CSS/vanilla JS on GitHub Pages.

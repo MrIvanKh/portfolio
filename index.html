@@ -1,449 +1,374 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ivan Khrapach — Technical Program Manager</title>
-<meta name="description" content="Technical Program Manager — four real programs in order, each as an objective, its key results, and how it happened.">
-<link rel="canonical" href="https://mrivankh.github.io/portfolio/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ivan Khrapach — Technical Program Manager">
-<meta property="og:description" content="Four real programs in order, each as an objective, its key results, and how it happened.">
-<meta property="og:url" content="https://mrivankh.github.io/portfolio/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ivan Khrapach — Technical Program Manager">
-<meta name="twitter:description" content="Four real programs in order, each as an objective, its key results, and how it happened.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzE2MjIyQyIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFFN0E3MiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIzLjUiIGZpbGw9IiMxRTdBNzIiLz48L3N2Zz4=">
+<title>Ivan Khrapach</title>
+<meta name="description" content="Work that's stuck between teams, made to move. Stories from work, things I build, a small game and notes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --paper: #F2F5F7;
-    --paper-raised: #FFFFFF;
-    --ink: #16222C;
-    --ink-soft: #4C606E;
-    --line: rgba(22, 34, 44, 0.14);
-    --line-strong: rgba(22, 34, 44, 0.26);
-    --teal: #1E7A72;
-    --teal-soft: rgba(30, 122, 114, 0.10);
-    --amber: #B4681F;
-    --amber-soft: rgba(180, 104, 31, 0.12);
-    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace;
-    --serif: "IBM Plex Serif", Georgia, serif;
-    --sans: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
-    --nav-h: 52px;
-  }
+:root{
+  --paper:#F3EEE4; --ink:#151412; --muted:#6B665D; --rule:#151412; --accent:#E5432D; --soft:#E6DFD1;
+  --serif:"Fraunces",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+section{scroll-margin-top:58px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #0E1620;
-      --paper-raised: #131D28;
-      --ink: #E7EEF2;
-      --ink-soft: #93A7B3;
-      --line: rgba(231, 238, 242, 0.14);
-      --line-strong: rgba(231, 238, 242, 0.24);
-      --teal: #4FBFB2;
-      --teal-soft: rgba(79, 191, 178, 0.12);
-      --amber: #E0A458;
-      --amber-soft: rgba(224, 164, 88, 0.14);
-    }
-  }
-  :root[data-theme="dark"] {
-    --paper: #0E1620;
-    --paper-raised: #131D28;
-    --ink: #E7EEF2;
-    --ink-soft: #93A7B3;
-    --line: rgba(231, 238, 242, 0.14);
-    --line-strong: rgba(231, 238, 242, 0.24);
-    --teal: #4FBFB2;
-    --teal-soft: rgba(79, 191, 178, 0.12);
-    --amber: #E0A458;
-    --amber-soft: rgba(224, 164, 88, 0.14);
-  }
+/* masthead */
+.mast{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:2px solid var(--rule)}
+.mast .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;gap:16px}
+.mast b{font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:-.01em}
+.mast nav{display:flex;gap:22px}
+.mast nav a{text-decoration:none}
+.mast nav a:hover{color:var(--accent)}
 
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.6;
-  }
+/* cover */
+.cover{padding:56px 0 40px;border-bottom:2px solid var(--rule)}
+.issue{display:flex;justify-content:space-between;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:28px}
+.cover h1{font-family:var(--serif);font-weight:900;font-size:clamp(64px,13vw,184px);line-height:.86;letter-spacing:-.045em;margin:0}
+.cover h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+.cover-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;margin-top:40px;align-items:end}
+.cover-top{display:grid;grid-template-columns:1fr minmax(240px,34%);gap:40px;align-items:end}
+.cover-top h1{font-size:clamp(64px,11vw,164px)}
+.portrait{margin:0;position:relative}
+.portrait img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;border:2px solid var(--ink);box-shadow:10px 10px 0 var(--accent);filter:saturate(.9) contrast(1.03)}
+.portrait figcaption{margin-top:16px;color:var(--muted)}
+.dek{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.25;margin:0}
+.status{margin-top:18px;display:inline-flex;align-items:center;gap:10px}
+.dot{width:9px;height:9px;border-radius:50%;background:#2E9E5B;display:inline-block}
+.toc{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.toc li{border-bottom:1px solid var(--rule)}
+.toc a{display:grid;grid-template-columns:44px 1fr auto;gap:10px;padding:10px 0;text-decoration:none;align-items:baseline}
+.toc a:hover{color:var(--accent)}
+.toc .n{font-family:var(--mono);font-size:13px}
+.toc .t{font-family:var(--serif);font-size:19px}
 
-  .wrap { max-width: 780px; margin: 0 auto; padding: 1.5rem 1.5rem 5rem; }
+/* chapters */
+.ch{border-bottom:2px solid var(--rule);padding:72px 0}
+.ch-head{display:grid;grid-template-columns:140px 1fr;gap:28px;align-items:start}
+.num{font-family:var(--serif);font-weight:900;font-size:110px;line-height:.8;letter-spacing:-.05em;color:var(--accent)}
+.kicker{margin-bottom:14px;color:var(--muted)}
+.ch h2{font-family:var(--serif);font-weight:900;font-size:clamp(40px,6.2vw,84px);line-height:.95;letter-spacing:-.035em;margin:0 0 28px}
+.ch-body{display:grid;grid-template-columns:140px 1.4fr 1fr;gap:28px}
+.ch-body p{margin:0 0 16px;max-width:60ch}
+.lead::first-letter{font-family:var(--serif);font-weight:900;float:left;font-size:64px;line-height:.85;padding:6px 10px 0 0;color:var(--accent)}
+.stat{border-top:6px solid var(--ink);padding-top:14px}
+.stat .big{font-family:var(--serif);font-weight:900;font-size:clamp(56px,7vw,96px);line-height:.9;letter-spacing:-.04em}
+.stat .cap{font-family:var(--serif);font-size:20px;line-height:1.25;margin-top:8px}
+.byline{margin-top:20px;padding-top:12px;border-top:1px solid var(--rule);color:var(--muted)}
+.ch.invert{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.ch.invert .kicker,.ch.invert .byline{color:#B9B2A5}
+.ch.invert .byline{border-color:#B9B2A5}
+.ch.invert .stat{border-color:var(--paper)}
 
-  .label {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
+/* play */
+.play{background:var(--accent);color:var(--ink);border-bottom:2px solid var(--rule);padding:72px 0}
+.play .num{color:var(--ink)}
+.play .kicker{color:var(--ink);opacity:.8}
+.screen{position:relative;border:3px solid var(--ink);background:#1B1B2A;aspect-ratio:16/9;max-height:620px;width:100%;overflow:hidden}
+.screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.screen button{position:absolute;inset:0;width:100%;border:0;background:#1B1B2A;color:#FFF4D6;cursor:pointer;font-family:var(--mono);font-size:14px;letter-spacing:.1em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.screen button span.big{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5vw,64px);letter-spacing:-.03em;text-transform:none}
+.screen button:hover span.big{color:#FFC93C}
+.blink{animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
 
-  /* ---------- top nav ---------- */
+/* builds */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--rule);border-left:2px solid var(--rule)}
+.card{border-right:2px solid var(--rule);border-bottom:2px solid var(--rule);padding:24px;display:flex;flex-direction:column;gap:12px;min-height:280px}
+.card h3{font-family:var(--serif);font-weight:900;font-size:34px;line-height:1;letter-spacing:-.02em;margin:0}
+.card p{margin:0;flex:1}
+.tag{align-self:flex-start;border:1.5px solid var(--ink);border-radius:999px;padding:2px 10px}
+.tag.live{background:var(--ink);color:var(--paper)}
+.card:hover{background:var(--soft)}
 
-  .topnav {
-    position: sticky; top: 0; z-index: 10; height: var(--nav-h);
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-    margin: 0 -1.5rem 2.4rem; padding: 0 1.5rem;
-  }
-  .topnav .brand {
-    font-family: var(--mono); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.04em;
-    color: var(--ink); text-decoration: none; white-space: nowrap;
-  }
-  .topnav nav { display: flex; gap: 0.3rem; overflow-x: auto; }
-  .topnav a.nav-link {
-    font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--ink-soft); text-decoration: none; padding: 0.4rem 0.65rem; border-radius: 6px; white-space: nowrap;
-  }
-  .topnav a.nav-link:hover, .topnav a.nav-link:focus-visible { color: var(--ink); background: var(--teal-soft); }
-  .topnav a.nav-link.play { color: var(--amber); }
+/* notes */
+.notes{list-style:none;margin:0;padding:0;border-top:2px solid var(--rule)}
+.notes li{display:grid;grid-template-columns:140px 1fr 140px;gap:28px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.notes .t{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);line-height:1.15;letter-spacing:-.01em}
+.notes .s{text-align:right;color:var(--muted)}
+.notes a.t{text-decoration:none}
+.notes a.t:hover{color:var(--accent)}
 
-  /* ---------- header ---------- */
+.soon{font-family:var(--serif);font-style:italic;font-size:clamp(28px,3.6vw,44px);color:var(--muted);margin:0;padding-top:18px;border-top:2px solid var(--rule)}
 
-  header.intro { margin-bottom: 1rem; }
-  .status-bar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.4rem; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft); flex: none; }
-  .status-bar .label { color: var(--teal); }
+/* back page */
+.back{padding:96px 0 40px}
+.back h2{font-family:var(--serif);font-weight:900;font-size:clamp(56px,10vw,150px);line-height:.88;letter-spacing:-.045em;margin:0 0 28px}
+.back h2 a{text-decoration:none;border-bottom:8px solid var(--accent)}
+.back h2 a:hover{color:var(--accent)}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:64px}
+.btn{border:2px solid var(--ink);padding:12px 18px;text-decoration:none;font-weight:600}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.colophon{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--rule);padding-top:14px;color:var(--muted)}
 
-  h1 {
-    font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 5.5vw, 2.7rem);
-    letter-spacing: -0.01em; margin: 0 0 0.4rem; text-wrap: balance;
-  }
-  .role-line { font-size: 1.05rem; color: var(--ink-soft); margin: 0 0 1.1rem; max-width: 60ch; }
+/* pull quote + sidebar */
+.pull{margin:56px 0 0 168px;padding:24px 0 0;border-top:6px solid var(--accent);font-family:var(--serif);font-style:italic;font-size:clamp(28px,3.6vw,48px);line-height:1.12;letter-spacing:-.02em;max-width:22ch}
+.pull span{display:block;font-style:normal;margin-top:14px;color:var(--muted)}
+.side{margin:48px 0 0 168px;max-width:640px;background:var(--soft);padding:20px 24px;border-left:6px solid var(--ink)}
+.side p{margin:8px 0 0;font-family:var(--serif);font-size:20px;line-height:1.35}
+.feature-build{background:var(--soft)}
+.play h2{font-family:var(--serif);font-weight:900;font-size:clamp(40px,6.2vw,84px);line-height:.95;letter-spacing:-.035em;margin:0 0 28px}
 
-  .contact-row {
-    display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
-    font-family: var(--mono); font-size: 0.85rem; margin-bottom: 1.6rem;
-  }
-  .contact-row a { color: var(--teal); text-decoration: none; }
-  .contact-row a:hover { text-decoration: underline; }
-  .contact-row .sep { color: var(--line-strong); }
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.blink{animation:none}}
 
-  .throughline {
-    font-size: 1rem; color: var(--ink); max-width: 62ch; margin: 0 0 1.8rem;
-    padding-left: 0.9rem; border-left: 3px solid var(--amber);
-  }
-
-  .signals {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
-    background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
-  }
-  .signal { background: var(--paper-raised); padding: 0.9rem 1rem; }
-  .signal .num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.4rem; font-weight: 600; color: var(--teal); }
-  .signal .cap { font-size: 0.76rem; color: var(--ink-soft); margin-top: 0.15rem; }
-
-  /* ---------- section headings ---------- */
-
-  section { scroll-margin-top: calc(var(--nav-h) + 14px); }
-  .section-head { display: flex; align-items: baseline; gap: 0.75rem; margin: 3.4rem 0 1.1rem; }
-  .section-head .label { white-space: nowrap; }
-  .section-head .rule { height: 1px; background: var(--line); flex: 1; }
-  p.intro { color: var(--ink-soft); max-width: 62ch; margin: 0 0 1.6rem; }
-
-  /* ---------- entry cards ---------- */
-
-  .card-entry { border: 1px solid var(--line); border-radius: 12px; background: var(--paper-raised); margin-bottom: 1.1rem; overflow: hidden; }
-  .card-head { padding: 1.2rem 1.3rem 0.4rem; }
-  .entry-date { font-family: var(--mono); font-size: 0.72rem; color: var(--amber); letter-spacing: 0.06em; margin-bottom: 0.4rem; }
-  .entry-title { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; margin: 0; text-wrap: balance; }
-  .entry-org { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.3rem; }
-
-  .card-body { padding: 0.9rem 1.3rem 1.4rem; }
-
-  .okr { display: grid; grid-template-columns: 108px 1fr; row-gap: 0.9rem; column-gap: 1rem; font-size: 0.95rem; margin-top: 0.6rem; }
-  .okr dt { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal); padding-top: 0.15rem; }
-  .okr dd { margin: 0; }
-
-  .stat-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.3rem; }
-  .stat-chip { font-family: var(--mono); font-size: 0.78rem; font-variant-numeric: tabular-nums; background: var(--amber-soft); color: var(--amber); border-radius: 999px; padding: 0.3rem 0.7rem; }
-
-  .link-row { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 1rem; }
-  .entry-link { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--mono); font-size: 0.8rem; color: var(--teal); text-decoration: none; }
-  .entry-link:hover { text-decoration: underline; }
-
-  /* ---------- companion / game callout ---------- */
-
-  .console-link {
-    display: block; border: 1px solid var(--line-strong); border-radius: 12px; padding: 1.3rem 1.4rem;
-    text-decoration: none; color: inherit;
-    background: linear-gradient(135deg, var(--amber-soft), transparent 60%);
-    transition: border-color 0.15s ease;
-  }
-  .console-link:hover, .console-link:focus-visible { border-color: var(--amber); }
-  .console-link .label { color: var(--amber); margin-bottom: 0.4rem; }
-  .console-link .cl-title { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.3rem; }
-  .console-link .cl-desc { color: var(--ink-soft); font-size: 0.92rem; max-width: 56ch; }
-  .console-link .cl-arrow { font-family: var(--mono); margin-left: 0.3rem; }
-
-  /* ---------- footer ---------- */
-
-  footer {
-    margin-top: 3.4rem; border-top: 1px solid var(--line); padding-top: 1.4rem;
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1rem;
-    font-size: 0.88rem; color: var(--ink-soft);
-  }
-  footer a { color: var(--teal); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .foot-main { display: flex; flex-direction: column; gap: 0.3rem; }
-  .updated { font-family: var(--mono); font-size: 0.76rem; opacity: 0.8; }
-  .foot-links { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+@media (max-width:860px){
+  .wrap{padding:0 16px}
+  .mast nav{gap:14px}
+  .mast nav .hide-s{display:none}
+  .cover-grid{grid-template-columns:1fr;gap:28px}
+  .cover-top{grid-template-columns:1fr;gap:24px}
+  .portrait{max-width:420px}
+  .portrait img{box-shadow:6px 6px 0 var(--accent)}
+  .ch,.play{padding:48px 0}
+  .ch-head,.ch-body{grid-template-columns:1fr;gap:12px}
+  .ch-head .num,.ch-body .spacer{display:none}
+  .num-inline{display:block!important}
+  .cards{grid-template-columns:1fr}
+  .card{min-height:0}
+  .notes li{grid-template-columns:1fr;gap:4px}
+  .notes .s{text-align:left}
+  .screen{aspect-ratio:3/4}
+  .pull,.side{margin-left:0;max-width:none}
+}
+.num-inline{display:none;font-family:var(--serif);font-weight:900;font-size:56px;line-height:.9;color:var(--accent);margin-bottom:8px}
+.play .num-inline{color:var(--ink)}
 </style>
 </head>
 <body>
 
+<header class="mast">
+  <div class="wrap">
+    <b>Ivan Khrapach</b>
+    <nav class="mono">
+      <a href="#contents" class="hide-s">Contents</a>
+      <a href="#play">Play</a>
+      <a href="#write">Write to me</a>
+    </nav>
+  </div>
+</header>
 
-<nav class="topnav" aria-label="Primary">
-  <a class="brand" href="#top">IVAN KHRAPACH ///</a>
-  <nav aria-label="Sections">
-    <a class="nav-link" href="#cases">Case Studies</a>
-    <a class="nav-link" href="#work">Projects</a>
-    <a class="nav-link play" href="program-quest.html" target="_blank" rel="noopener">Play ↗</a>
-  </nav>
-</nav>
-
-<main class="wrap" id="top">
-
-  <header class="intro">
-    <div class="status-bar">
-      <span class="dot" aria-hidden="true"></span>
-      <span class="label">Available — relocating to Warsaw, PL</span>
+<main>
+<section class="cover" id="contents">
+  <div class="wrap">
+    <div class="issue mono"><span>Issue 01</span><span>November 2026</span><span>Warsaw / Toronto</span></div>
+    <div class="cover-top">
+      <h1>Stuck<br>between<br><em>teams?</em></h1>
+      <figure class="portrait">
+        <img src="img/ivan.jpg" alt="Ivan Khrapach smiling on stage with a microphone, in glasses and a light cardigan" width="880" height="1176">
+        <figcaption class="mono">Ivan Khrapach. Usually behind the stage, sometimes on it.</figcaption>
+      </figure>
     </div>
-    <h1>Ivan Khrapach</h1>
-    <p class="role-line">Technical Program Manager — currently embedded at Google Cloud Marketing Strategy &amp; Operations, via Deloitte Canada.</p>
-    <div class="contact-row">
-      <a href="mailto:ivan.khrapach1@gmail.com">ivan.khrapach1@gmail.com</a>
-      <span class="sep">·</span>
-      <a href="https://linkedin.com/in/mr-ivan" target="_blank" rel="noopener">linkedin.com/in/mr-ivan</a>
-      <span class="sep">·</span>
-      <a href="https://github.com/MrIvanKh" target="_blank" rel="noopener">github.com/MrIvanKh</a>
-    </div>
-
-    <p class="throughline">Started in finance and accounting in Warsaw. Moved into transformation, then enterprise program leadership. Along the way, owned a product backlog directly inside an engineering team. Spent the last two years building the systems — OKRs, governance, automation — that let organizations execute at scale. Five roles, one throughline: turning ambiguity into structure.</p>
-
-    <div class="signals">
-      <div class="signal"><div class="num">7+</div><div class="cap">years, cross-org delivery</div></div>
-      <div class="signal"><div class="num">70%</div><div class="cap">2-yr roadmap in 10mo · CBRE</div></div>
-      <div class="signal"><div class="num">100+</div><div class="cap">initiatives/yr · Cadillac Fairview</div></div>
-      <div class="signal"><div class="num">7</div><div class="cap">regions, dual-vendor model · Deloitte/GCM</div></div>
-    </div>
-  </header>
-
-  <section id="cases">
-    <div class="section-head">
-      <span class="label">Case Studies — five roles, in order</span>
-      <span class="rule" aria-hidden="true"></span>
-    </div>
-    <p class="intro">Real programs, structured the way I actually run them: an objective, the key results that prove it, and how it happened.</p>
-
-    <div class="card-entry">
-      <div class="card-head">
-        <div class="entry-date">2018 – 2022</div>
-        <p class="entry-title">A technical finance-systems transformation, early</p>
-        <p class="entry-org">CBRE · Warsaw, Poland</p>
+    <div class="cover-grid">
+      <div>
+        <p class="dek">That's the work I take. I find the owner, build what's missing, and keep it moving until it's done. This issue: four stories from work, a game, and things I build on weekends.</p>
+        <div class="status mono"><span class="dot"></span>Available · Warsaw, Poland · Authorized to work in Poland</div>
       </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Deliver a technical finance-systems transformation and data migration across a two-year roadmap.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">70% of 2-yr systems roadmap in 10mo</span>
-              <span class="stat-chip">Data migration delivered, 15+ teams</span>
-              <span class="stat-chip">$8M+ payment risk resolved</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Coordinated 15+ cross-functional teams through a data-migration and finance-systems implementation using Agile/Scrum; led risk mitigation on delayed intercompany payments directly with finance partners; built automation that drove error-free reporting and strengthened the relationship with enterprise client Google.</dd>
-        </dl>
-      </div>
+      <ol class="toc">
+        <li><a href="#s1"><span class="n">01</span><span class="t">300 people, one goal system</span><span class="mono">Story</span></a></li>
+        <li><a href="#s2"><span class="n">02</span><span class="t">A Chrome extension out of spite</span><span class="mono">Build</span></a></li>
+        <li><a href="#play"><span class="n">03</span><span class="t">Rather play it?</span><span class="mono">Game</span></a></li>
+        <li><a href="#s4"><span class="n">04</span><span class="t">Seven regions, one plan</span><span class="mono">Story</span></a></li>
+        <li><a href="#s5"><span class="n">05</span><span class="t">Investors don't write user stories</span><span class="mono">Story</span></a></li>
+        <li><a href="#s6"><span class="n">06</span><span class="t">100 initiatives, nowhere to see them</span><span class="mono">Story</span></a></li>
+        <li><a href="#s7"><span class="n">07</span><span class="t">More from the workshop</span><span class="mono">Builds</span></a></li>
+        <li><a href="#s8"><span class="n">08</span><span class="t">Notes and templates</span><span class="mono">Soon</span></a></li>
+      </ol>
     </div>
+  </div>
+</section>
 
-    <div class="card-entry">
-      <div class="card-head">
-        <div class="entry-date">2023 – 2025</div>
-        <p class="entry-title">Architecting the workflow system for 100+ initiatives a year</p>
-        <p class="entry-org">Cadillac Fairview · Toronto, Canada</p>
-      </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Architect a workflow system — intake, governance, reporting — for a 100+ initiative/year portfolio that had none.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">200+ users on a system built from scratch</span>
-              <span class="stat-chip">~30% faster close</span>
-              <span class="stat-chip">delivered on schedule</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Architected Asana as the department's operating system — intake, governance, and reporting workflows built from the ground up; directed roadmaps, dependencies, and executive governance across 200+ Finance and Technology stakeholders.</dd>
-        </dl>
-      </div>
+<section class="ch" id="s1">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">01</div>
+      <div><span class="num-inline">01</span><div class="kicker mono">Story · filed from Yuno, a payments fintech</div>
+        <h2 class="rv">300 people, one goal system, cycle one.</h2></div>
     </div>
+    <div class="ch-body">
+      <div class="spacer"></div>
+      <div class="rv">
+        <p class="lead">A company growing fast, with no shared way to set or track goals. Everyone was busy; nobody could say what mattered most this quarter. With the CEO, I built the company OKR system from scratch, then a performance cycle to go with it.</p>
+        <p>During a restructuring I sat with the Heads of Product and Engineering and worked out who owns what. Then I ran the leadership workshops that turned competing priorities into one 90-day plan.</p>
+      </div>
+      <div class="stat rv"><div class="big">6 wks</div><div class="cap">for all 300+ people to set goals in the first cycle.</div></div>
+    </div>
+  </div>
+</section>
 
-    <div class="card-entry">
-      <div class="card-head">
-        <div class="entry-date">May 2025 – Nov 2025 · part-time, concurrent</div>
-        <p class="entry-title">Product ownership, backlog-deep with engineering</p>
-        <p class="entry-org">Quantum Mosaic · Product Manager Advisor</p>
-      </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Own the product backlog and roadmap for an early-stage product, working directly inside the engineering team.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">First enterprise pilot clients secured</span>
-              <span class="stat-chip">Backlog run through full Agile ceremonies</span>
-              <span class="stat-chip">Product strategy set with CEO/CTO</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Partnered directly with the CEO and CTO on product strategy, roadmap, and go-to-market; owned the backlog and wrote user stories alongside engineering and product contributors, running Agile ceremonies in Jira and Confluence; worked with enterprise clients (VCs, GPs, family offices) to refine customer journeys and secure the first pilot clients through demos and negotiation.</dd>
-        </dl>
-      </div>
+<section class="ch feature-build" id="s2">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">02</div>
+      <div><span class="num-inline">02</span><div class="kicker mono">Build · shipped · free</div>
+        <h2 class="rv">I got tired of "remote" jobs that weren't. So I built a filter.</h2></div>
     </div>
+    <div class="ch-body">
+      <div class="spacer"></div>
+      <div class="rv">
+        <p class="lead">Job hunting on LinkedIn means scrolling past the same posts, reposted, and opening "remote" roles that turn out to be hybrid three paragraphs down. Jobs Cleaner is a Chrome extension that hides what you've already seen, filters out the fake-remote ones and flags reposts.</p>
+        <p>I'm not an engineer. I built it by directing AI tools, the same way I run a program: clear scope, small releases, test it on real use.</p>
+      </div>
+      <div class="stat rv"><div class="big">0</div><div class="cap">times I want to read the same job post again.</div></div>
+    </div>
+  </div>
+</section>
 
-    <div class="card-entry">
-      <div class="card-head">
-        <div class="entry-date">Nov 2025 – Mar 2026</div>
-        <p class="entry-title">Building the goal-execution system, inside Product and Engineering</p>
-        <p class="entry-org">Yuno · Toronto, Canada</p>
-      </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Build a company-wide OKR system from nothing, working directly inside Product and Engineering to make it real.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">Product/Eng ownership clarified</span>
-              <span class="stat-chip">OKR framework launched company-wide</span>
-              <span class="stat-chip">90-day execution plan</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Partnered directly with the Head of Product and the Head of Engineering on team structure and ways of working during rapid organizational change; designed the OKR framework itself — goal-setting, evaluation, review, calibration — with the CEO; ran senior-leadership workshops and decision forums across Product, Engineering, and Operations.</dd>
-        </dl>
-      </div>
+<section class="play" id="play">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">03</div>
+      <div><span class="num-inline">03</span><div class="kicker mono">Game · about 3 minutes</div>
+        <h2 class="rv">Rather play it?</h2></div>
     </div>
+    <div class="screen rv" id="screen">
+      <button id="start" aria-label="Start Program Quest">
+        <span class="mono">Program Quest</span>
+        <span class="big">Five worlds. All true.</span>
+        <span class="mono blink">▶ Press to start</span>
+      </button>
+    </div>
+    <p class="mono" style="margin-top:12px">← → to move · Space to jump · Enter to read · on phones, use the buttons</p>
+  </div>
+</section>
 
-    <div class="card-entry">
-      <div class="card-head">
-        <div class="entry-date">Mar 2026 – Present</div>
-        <p class="entry-title">Unifying governance across a 7-region, two-vendor operation</p>
-        <p class="entry-org">Deloitte Canada, embedded — Google Cloud Marketing Strategy &amp; Operations</p>
+<section class="ch invert" id="s4">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">04</div>
+      <div><span class="num-inline">04</span><div class="kicker mono">Story · filed from Google Cloud Marketing, through Deloitte</div>
+        <h2 class="rv">Seven regions, two vendors, one plan.</h2></div>
+    </div>
+    <div class="ch-body">
+      <div class="spacer"></div>
+      <div class="rv">
+        <p class="lead">Seven regions and two vendor firms were doing overlapping work, and nobody was sure who owned what. I co-led the operating-model review: mapped the overlaps and gaps, set clear owners and escalation paths, and helped write the action plan we took to leadership.</p>
+        <p>I also ran the financial reporting and analysis for a $36M cost center. A weekly budget review turned up $800K of spend booked in the wrong place, and I recommended moving $300K of underspend to close a projected deficit.</p>
+        <p>Some regions had already built smart automations for their own reporting. I took them and scaled them across the other regions. LATAM's alone was projected to save more than 1,000 hours a year.</p>
       </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Bring one governance model to a $9M+/quarter cost center spanning 7 regions and two vendor firms.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">$800K+ misclassified spend found</span>
-              <span class="stat-chip">Variance held under 1%</span>
-              <span class="stat-chip">Unified action plan, 7 regions / 2 vendors</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Reconciled and governed the cost center with a weekly review cadence; audited functional overlaps across regions and vendors (Deloitte, Accenture); established RASCI ownership and clear escalation paths; co-authored the unified action plan presented to leadership.</dd>
-        </dl>
+      <div class="stat rv"><div class="big">7→1</div><div class="cap">seven regions, one plan, clear owners.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ch" id="s5">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">05</div>
+      <div><span class="num-inline">05</span><div class="kicker mono">Story · filed from Quantum Mosaic, an investment-tech startup</div>
+        <h2 class="rv">Investors don't write user stories. Somebody has to.</h2></div>
+    </div>
+    <div class="ch-body">
+      <div class="spacer"></div>
+      <div class="rv">
+        <p class="lead">An early-stage team building a platform for investment firms. The CEO and CTO had the vision; the customers were VC, private equity and family-office teams who know exactly what annoys them and have no time to explain it twice.</p>
+        <p>Part-time, alongside the CEO and CTO, I ran the discovery: sat with those teams, mapped how they actually work, and turned it into a prioritized backlog and user stories. Then I ran the sprints with engineering and UX, and helped with the demos and negotiations that followed.</p>
       </div>
+      <div class="stat rv"><div class="big">3</div><div class="cap">enterprise pilots supported.</div></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="work">
-    <div class="section-head">
-      <span class="label">Selected Projects</span>
-      <span class="rule" aria-hidden="true"></span>
+<section class="ch" id="s6">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">06</div>
+      <div><span class="num-inline">06</span><div class="kicker mono">Story · filed from Cadillac Fairview, Toronto</div>
+        <h2 class="rv">100 initiatives a year, and nowhere to see them.</h2></div>
     </div>
-    <p class="intro">Two self-directed builds — hands-on technical ownership outside a formal engineering title.</p>
-
-    <div class="card-entry">
-      <div class="card-head">
-        <p class="entry-title">RecoverFlow</p>
-        <p class="entry-org">Founder — AI-assisted build (Claude Code, Lovable, React, TypeScript, Supabase)</p>
+    <div class="ch-body">
+      <div class="spacer"></div>
+      <div class="rv">
+        <p class="lead">Finance and Technology were running 100+ initiatives a year and no single place to see them all. I built the PMO: intake, prioritization, a delivery rhythm people could set their week by.</p>
+        <p>I also built the Asana portfolio system used to track the biggest programs and report to the senior leadership committee, and ran the VP-level steering committees. The one nobody skipped.</p>
       </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Ship a real, revenue-relevant SaaS product solo, to prove hands-on technical capability.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">5 core workflows shipped</span>
-              <span class="stat-chip">RLS + RBAC + HMAC OAuth</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Designed and shipped a Stripe payment-recovery SaaS product solo, using AI-assisted development — pre-dunning alerts, automated win-back flows, revenue-attribution analytics, subscription pause.</dd>
-        </dl>
-        <div class="link-row">
-          <a class="entry-link" href="https://www.recover-flow.com/" target="_blank" rel="noopener">↗ recover-flow.com</a>
-        </div>
-      </div>
+      <div class="stat rv"><div class="big">18→10</div><div class="cap">An 18-month roadmap, delivered in about 10.</div></div>
     </div>
+    <aside class="side rv">
+      <div class="mono">Before all this</div>
+      <p>I started in accounting at CBRE in Warsaw, then ran a data migration with 15+ teams and traced a $100M+ ledger gap to its root cause. I still read the spreadsheet before the slide.</p>
+    </aside>
+  </div>
+</section>
 
-    <div class="card-entry">
-      <div class="card-head">
-        <p class="entry-title">RaislyHQ</p>
-        <p class="entry-org">Founder — product direction, with developer &amp; UX collaborators</p>
-      </div>
-      <div class="card-body">
-        <dl class="okr">
-          <dt>Objective</dt>
-          <dd>Take an automated job-search platform from concept to MVP.</dd>
-          <dt>Key Results</dt>
-          <dd>
-            <div class="stat-row">
-              <span class="stat-chip">Concept → MVP</span>
-              <span class="stat-chip">Founder-led</span>
-            </div>
-          </dd>
-          <dt>How</dt>
-          <dd>Owned product direction, scope, and competitive analysis; directed developer and UX collaborators through delivery.</dd>
-        </dl>
-      </div>
+<section class="ch" id="s7">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">07</div>
+      <div><span class="num-inline">07</span><div class="kicker mono">Builds · made by directing AI tools</div>
+        <h2 class="rv">More from the workshop.</h2></div>
     </div>
-  </section>
+    <div class="cards rv">
+      <article class="card">
+        <span class="tag mono">Personal build</span>
+        <h3>RecoverFlow</h3>
+        <p>Payment recovery for Stripe businesses: a heads-up before cards fail, win-back flows, a report of what came back. Built solo with Claude Code and Lovable. No users yet, and I'm saying so.</p>
+        <span class="mono">Web app</span>
+      </article>
+      <article class="card">
+        <span class="tag live mono">Daily use</span>
+        <h3>The gym coach that thinks for me</h3>
+        <p>A coach inside Claude, with Notion as its memory. I say what I lifted, Wispr Flow turns my voice into text, and the coach logs it and adjusts the plan. Now I just train.</p>
+        <span class="mono">Claude + Notion + Wispr Flow</span>
+      </article>
+      <article class="card">
+        <span class="tag mono">You played it</span>
+        <h3>Program Quest</h3>
+        <p>A retro platformer in chapter 03: five worlds, true stories, and a coffee and a dumbbell hidden in each. Made because a list of jobs is boring.</p>
+        <a class="mono" href="#play">Play again ↑</a>
+      </article>
+    </div>
+  </div>
+</section>
 
-  <section id="play">
-    <div class="section-head">
-      <span class="label">Play</span>
-      <span class="rule" aria-hidden="true"></span>
+<section class="ch" id="s8">
+  <div class="wrap">
+    <div class="ch-head">
+      <div class="num">08</div>
+      <div><span class="num-inline">08</span><div class="kicker mono">Writing and things to steal</div>
+        <h2 class="rv">Notes and templates.</h2></div>
     </div>
-    <a class="console-link" href="program-quest.html" target="_blank" rel="noopener">
-      <div class="label">Interactive</div>
-      <div class="cl-title">Play the career map — walk the four-year run yourself</div>
-      <div class="cl-desc">The same four chapters above, as a short playable retro map — walk through them and collect the same results yourself.</div>
-      <span class="cl-arrow">→</span>
-    </a>
-  </section>
+    <p class="soon rv">Coming soon.</p>
+  </div>
+</section>
 
-  <footer>
-    <div class="foot-main">
-      <div>Toronto, Canada · relocating to Warsaw, PL · authorized to work in Poland</div>
-      <div class="updated">Last updated: September 2026</div>
+<section class="back" id="write">
+  <div class="wrap">
+    <div class="kicker mono">Back page</div>
+    <h2>Got something stuck? <a href="mailto:ivan.khrapach1@gmail.com">Write to me.</a></h2>
+    <div class="links">
+      <a class="btn" href="mailto:ivan.khrapach1@gmail.com">ivan.khrapach1@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/mr-ivan" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/MrIvanKh" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <div class="foot-links">
-      <a href="mailto:ivan.khrapach1@gmail.com">ivan.khrapach1@gmail.com</a>
-      <a href="https://linkedin.com/in/mr-ivan">linkedin.com/in/mr-ivan</a>
-      <a href="https://github.com/MrIvanKh">github.com/MrIvanKh</a>
-    </div>
-  </footer>
-
+    <div class="colophon mono"><span>Issue 01 · last updated November 2026</span><span>Set in Fraunces and Inter</span></div>
+  </div>
+</section>
 </main>
 
+<script>
+document.getElementById('start').addEventListener('click', function () {
+  var f = document.createElement('iframe');
+  f.src = 'program-quest.html';
+  f.title = 'Program Quest';
+  document.getElementById('screen').appendChild(f);
+  this.remove();
+  f.addEventListener('load', function () { try { f.contentWindow.focus(); } catch (e) {} });
+});
+var io = new IntersectionObserver(function (es) {
+  es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+</script>
 </body>
 </html>
