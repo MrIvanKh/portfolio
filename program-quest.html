@@ -69,7 +69,7 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;touch
 var VW=320,VH=180,T=16,R=11,OY=VH-R*T;
 var cv=document.getElementById('c'),ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
 var stage=document.getElementById('stage'),pad=document.getElementById('pad');
-function fit(){var ph=getComputedStyle(pad).display==='none'?0:pad.offsetHeight+10;var s=Math.min(innerWidth/VW,(innerHeight-ph)/VH);if(s>=2)s=Math.floor(s);s=Math.max(.5,s);cv.style.width=VW*s+'px';cv.style.height=VH*s+'px';stage.style.setProperty('--fs',Math.max(7,Math.round(s*3.4))+'px');}
+function fit(){var ph=getComputedStyle(pad).display==='none'?0:pad.offsetHeight+10;var s=Math.min(innerWidth/VW,(innerHeight-ph)/VH);s=Math.max(.5,s);cv.style.width=VW*s+'px';cv.style.height=VH*s+'px';stage.style.setProperty('--fs',Math.max(7,Math.round(s*3.4))+'px');}
 addEventListener('resize',fit);fit();
 function $(id){return document.getElementById(id);}
 function clamp(v,a,b){return v<a?a:v>b?b:v;}
